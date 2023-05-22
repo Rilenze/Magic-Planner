@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Task from "./components/Task";
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
@@ -25,8 +26,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Mujo</Text>
-      <StatusBar style="auto" />
+      <Text>Današnji zadaci:</Text>
+      {tasks.map((task) => (
+        <View>
+          <Task key={task.accountId} task={task} />
+        </View>
+      ))}
     </View>
   );
 }
