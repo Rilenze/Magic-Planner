@@ -26,12 +26,14 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Današnji zadaci:</Text>
-      {tasks.map((task) => (
-        <View>
-          <Task key={task.accountId} task={task} />
+      <View style={styles.tasksWrapper}>
+        <Text style={styles.title}>Današnji zadaci</Text>
+        <View style={styles.tasks}>
+          {tasks.map((task) => (
+            <Task key={task.id} task={task} />
+          ))}
         </View>
-      ))}
+      </View>
     </View>
   );
 }
@@ -39,8 +41,17 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#e8eaed",
+  },
+  tasksWrapper: {
+    paddingTop: 80,
+    paddingHorizontal: 20,
+  },
+  tasks: {
+    marginTop: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });
