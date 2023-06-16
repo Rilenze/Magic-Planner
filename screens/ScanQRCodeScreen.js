@@ -7,6 +7,9 @@ export default function ScanQRCodeScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Not yet scanned");
+  const [stringCodes, setStringCodes] = useState([]);
+
+  const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
   const askForCameraPermission = () => {
     (async () => {
@@ -16,14 +19,27 @@ export default function ScanQRCodeScreen({ navigation }) {
     })();
   };
 
+  async function fetchStringCodes() {
+    const response = await fetch(`${API_BASE_URL}/api/v1/account/settings`);
+    const data = await response.json();
+    setStringCodes(data);
+  }
+
   useEffect(() => {
     askForCameraPermission();
+    fetchStringCodes();
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    setText(data);
     console.log("Type: " + type + "\nData: " + data);
+
+    stringCodes.forEach((string) => {
+      if (string.phoneLoginString == data) {
+        console.log("Nadjen qr code i njegov id: " + string.accountId);
+        navigation.navigate("Tasks", { accountID: string.accountId });
+      }
+    });
   };
 
   //   if (!hasPermission) {
@@ -37,7 +53,6 @@ export default function ScanQRCodeScreen({ navigation }) {
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{ height: 500, width: 500 }}
         />
-        <Text>{text}</Text>
       </View>
     );
   }
