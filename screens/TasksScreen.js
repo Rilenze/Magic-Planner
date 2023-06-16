@@ -4,7 +4,7 @@ import Task from "../components/Task";
 
 export default function TasksScreen({ navigation, route }) {
   const [tasks, setTasks] = useState([]);
-  const [settings, setSettings] = useState(null);
+  const [settings, setSettings] = useState("#fff");
   const { accountID } = route.params;
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
@@ -25,7 +25,6 @@ export default function TasksScreen({ navigation, route }) {
         `${API_BASE_URL}/api/v1/account/settings/${accountID}`
       );
       const data = await response.json();
-      console.log(data);
       setSettings(data);
     } catch (error) {
       console.error("Failed to fetch tasks:", error);
@@ -45,11 +44,37 @@ export default function TasksScreen({ navigation, route }) {
       ]}
     >
       <View style={styles.tasksWrapper}>
-        <Text style={styles.title}>Zadaci</Text>
+        <Text style={styles.title}>Prioritetni zadaci</Text>
         <View style={styles.tasks}>
-          {tasks.map((task) => (
-            <Task key={task.id} task={task} />
-          ))}
+          {tasks.map((task) => {
+            if (task.priority) {
+              return (
+                <Task
+                  key={task.id}
+                  task={task}
+                  taskColor={settings.colorOfPriorityTask}
+                  textSize={settings.fontSize}
+                  textStyle={settings.font}
+                />
+              );
+            }
+          })}
+        </View>
+        <Text style={styles.title}>Manje prioritetni zadaci</Text>
+        <View style={styles.tasks}>
+          {tasks.map((task) => {
+            if (!task.priority) {
+              return (
+                <Task
+                  key={task.id}
+                  task={task}
+                  taskColor={settings.colorOfNormalTask}
+                  textSize={settings.fontSize}
+                  textStyle={settings.font}
+                />
+              );
+            }
+          })}
         </View>
       </View>
     </View>

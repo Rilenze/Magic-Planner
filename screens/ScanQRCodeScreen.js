@@ -6,7 +6,6 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 export default function ScanQRCodeScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState("Not yet scanned");
   const [stringCodes, setStringCodes] = useState([]);
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
@@ -51,7 +50,7 @@ export default function ScanQRCodeScreen({ navigation }) {
       <View style={styles.container}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ height: 500, width: 500 }}
+          style={{ height: "100%", width: 500 }}
         />
       </View>
     );
@@ -61,7 +60,7 @@ export default function ScanQRCodeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "yellow",
     alignItems: "center",
     justifyContent: "center",
   },

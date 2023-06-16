@@ -1,12 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet, CheckBox } from "react-native";
 
-export default function Task({ task }) {
+export default function Task({ task, taskColor, textSize, textStyle }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.naziv}>Naziv zadatka: {task.taskName}</Text>
+    <View style={[styles.container, { backgroundColor: taskColor }]}>
+      <Text style={[styles.naziv, { fontSize: textSize }]}>
+        Naziv zadatka: {task.taskName}
+      </Text>
       <Text style={styles.opis}>Opis zadatka: {task.description}</Text>
-      <Text>Rok izvršavanja: {task.dateOfCreation}</Text>
+      <Text>Rok izvršavanja: {task.dueDate + " " + task.dueTime}</Text>
     </View>
   );
 }
@@ -15,7 +17,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     borderRadius: 10,
-    backgroundColor: "#fff",
     marginBottom: 20,
   },
   naziv: {},
