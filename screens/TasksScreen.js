@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Pressable, ScrollView } from "react-native";
 import Task from "../components/Task";
-import * as Progress from "react-native-progress";
 
 export default function TasksScreen({ navigation, route }) {
   const [tasks, setTasks] = useState([]);
-  const [settings, setSettings] = useState("#fff");
+  const [settings, setSettings] = useState({});
   const { accountID } = route.params;
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
@@ -16,7 +15,7 @@ export default function TasksScreen({ navigation, route }) {
       const data = await response.json();
       setTasks(data);
     } catch (error) {
-      console.error("Failed to fetch tasks:", error);
+      console.error("Failed to fetch tasks in TasksScreen:", error);
     }
   }
 
@@ -28,7 +27,7 @@ export default function TasksScreen({ navigation, route }) {
       const data = await response.json();
       setSettings(data);
     } catch (error) {
-      console.error("Failed to fetch tasks:", error);
+      console.error("Failed to fetch settings in TasksScreen:", error);
     }
   }
 
@@ -55,7 +54,10 @@ export default function TasksScreen({ navigation, route }) {
                     <View key={task.id}>
                       <Pressable
                         onPress={() =>
-                          navigation.navigate("SubTasks", { taskID: task.id })
+                          navigation.navigate("SubTasks", {
+                            taskID: task.id,
+                            settings: settings,
+                          })
                         }
                       >
                         <Task
@@ -65,8 +67,6 @@ export default function TasksScreen({ navigation, route }) {
                           textStyle={settings.font}
                         />
                       </Pressable>
-                      <Progress.Bar progress={0.3} width={300} color="black" />
-                      <Text>1/4</Text>
                     </View>
                   );
                 }
@@ -80,7 +80,10 @@ export default function TasksScreen({ navigation, route }) {
                     <View key={task.id}>
                       <Pressable
                         onPress={() =>
-                          navigation.navigate("SubTasks", { taskID: task.id })
+                          navigation.navigate("SubTasks", {
+                            taskID: task.id,
+                            settings: settings,
+                          })
                         }
                       >
                         <Task
@@ -90,8 +93,6 @@ export default function TasksScreen({ navigation, route }) {
                           textStyle={settings.font}
                         />
                       </Pressable>
-                      <Progress.Bar progress={0.3} width={300} color="black" />
-                      <Text>1/4</Text>
                     </View>
                   );
                 }
