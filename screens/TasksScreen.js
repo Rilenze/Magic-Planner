@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Pressable, ScrollView } from "react-native";
 import Task from "../components/Task";
+import * as Progress from "react-native-progress";
 
 export default function TasksScreen({ navigation, route }) {
   const [tasks, setTasks] = useState([]);
@@ -37,47 +38,69 @@ export default function TasksScreen({ navigation, route }) {
   }, []);
 
   return (
-    <View
-      style={[
-        styles.containerTasks,
-        { backgroundColor: settings.colorForBackground },
-      ]}
-    >
-      <View style={styles.tasksWrapper}>
-        <Text style={styles.title}>Prioritetni zadaci</Text>
-        <View style={styles.tasks}>
-          {tasks.map((task) => {
-            if (task.priority) {
-              return (
-                <Task
-                  key={task.id}
-                  task={task}
-                  taskColor={settings.colorOfPriorityTask}
-                  textSize={settings.fontSize}
-                  textStyle={settings.font}
-                />
-              );
-            }
-          })}
+    <>
+      <ScrollView>
+        <View
+          style={[
+            styles.containerTasks,
+            { backgroundColor: settings.colorForBackground },
+          ]}
+        >
+          <View style={styles.tasksWrapper}>
+            <Text style={styles.title}>Prioritetni zadaci</Text>
+            <View style={styles.tasks}>
+              {tasks.map((task) => {
+                if (task.priority) {
+                  return (
+                    <View key={task.id}>
+                      <Pressable
+                        onPress={() =>
+                          navigation.navigate("SubTasks", { taskID: task.id })
+                        }
+                      >
+                        <Task
+                          task={task}
+                          taskColor={settings.colorOfPriorityTask}
+                          textSize={settings.fontSize}
+                          textStyle={settings.font}
+                        />
+                      </Pressable>
+                      <Progress.Bar progress={0.3} width={300} color="black" />
+                      <Text>1/4</Text>
+                    </View>
+                  );
+                }
+              })}
+            </View>
+            <Text style={styles.title}>Manje prioritetni zadaci</Text>
+            <View style={styles.tasks}>
+              {tasks.map((task) => {
+                if (!task.priority) {
+                  return (
+                    <View key={task.id}>
+                      <Pressable
+                        onPress={() =>
+                          navigation.navigate("SubTasks", { taskID: task.id })
+                        }
+                      >
+                        <Task
+                          task={task}
+                          taskColor={settings.colorOfNormalTask}
+                          textSize={settings.fontSize}
+                          textStyle={settings.font}
+                        />
+                      </Pressable>
+                      <Progress.Bar progress={0.3} width={300} color="black" />
+                      <Text>1/4</Text>
+                    </View>
+                  );
+                }
+              })}
+            </View>
+          </View>
         </View>
-        <Text style={styles.title}>Manje prioritetni zadaci</Text>
-        <View style={styles.tasks}>
-          {tasks.map((task) => {
-            if (!task.priority) {
-              return (
-                <Task
-                  key={task.id}
-                  task={task}
-                  taskColor={settings.colorOfNormalTask}
-                  textSize={settings.fontSize}
-                  textStyle={settings.font}
-                />
-              );
-            }
-          })}
-        </View>
-      </View>
-    </View>
+      </ScrollView>
+    </>
   );
 }
 

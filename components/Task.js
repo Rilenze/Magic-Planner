@@ -8,7 +8,8 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
         Naziv zadatka: {task.taskName}
       </Text>
       <Text style={styles.opis}>Opis zadatka: {task.description}</Text>
-      <Text>Rok izvršavanja: {task.dueDate + " " + task.dueTime}</Text>
+      <Text>Datum izvršavanja: {task.dueDate}</Text>
+      <Text>Vrijeme izvršavanja: {task.dueTime}</Text>
     </View>
   );
 }

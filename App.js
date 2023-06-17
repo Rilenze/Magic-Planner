@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
 import ScanQRCodeScreen from "./screens/ScanQRCodeScreen";
 import TasksScreen from "./screens/TasksScreen";
+import SubTasksScreen from "./screens/SubTasksScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,11 @@ export default function App() {
           name="Tasks"
           component={TasksScreen}
           options={{ title: "Tasks" }}
+        />
+        <Stack.Screen
+          name="SubTasks"
+          component={SubTasksScreen}
+          options={{ title: "SubTasks" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
