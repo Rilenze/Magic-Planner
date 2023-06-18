@@ -4,7 +4,7 @@ import * as Progress from "react-native-progress";
 
 export default function Task({ task, taskColor, textSize, textStyle }) {
   const [subTasks, setSubTasks] = useState([]);
-  const [finishedSubTask, setFinishedSubTaks] = useState(0);
+  const [finishedSubTasks, setFinishedSubTasks] = useState(0);
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
@@ -16,10 +16,10 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
       const data = await response.json();
       setSubTasks(data);
       let counter = 0;
-      for (let i = 0; i < subTasks.length; i++) {
-        if (subTasks[i].done) counter++;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].done) counter++;
       }
-      setFinishedSubTaks(counter);
+      setFinishedSubTasks(counter);
     } catch (error) {
       console.error("Failed to fetch subTasks in Task:", error);
     }
@@ -39,17 +39,17 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
         <Text>Datum izvršavanja: {task.dueDate}</Text>
         <Text>Vrijeme izvršavanja: {task.dueTime}</Text>
       </View>
-      {finishedSubTask === 0 ? (
+      {finishedSubTasks === 0 ? (
         <Progress.Bar width={300} color="blue" />
       ) : (
         <Progress.Bar
-          progress={finishedSubTask / subTasks.length}
+          progress={finishedSubTasks / subTasks.length}
           width={300}
           color="blue"
         />
       )}
       <Text>
-        {finishedSubTask} / {subTasks.length}
+        {finishedSubTasks} / {subTasks.length}
       </Text>
     </>
   );
