@@ -15,20 +15,18 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
       );
       const data = await response.json();
       setSubTasks(data);
+      let counter = 0;
+      for (let i = 0; i < subTasks.length; i++) {
+        if (subTasks[i].done) counter++;
+      }
+      setFinishedSubTaks(counter);
     } catch (error) {
       console.error("Failed to fetch subTasks in Task:", error);
     }
   }
 
-  function countFinishedSubTasks() {
-    for (let i = 0; i < subTasks.length; i++) {
-      if (subTasks[i].done) setFinishedSubTaks(finishedSubTask + 1);
-    }
-  }
-
   useEffect(() => {
     fetchSubTasks();
-    countFinishedSubTasks();
   }, []);
 
   return (
@@ -41,9 +39,17 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
         <Text>Datum izvršavanja: {task.dueDate}</Text>
         <Text>Vrijeme izvršavanja: {task.dueTime}</Text>
       </View>
-      <Progress.Bar progress={1 / subTasks.length} width={300} color="blue" />
+      {finishedSubTask === 0 ? (
+        <Progress.Bar width={300} color="blue" />
+      ) : (
+        <Progress.Bar
+          progress={finishedSubTask / subTasks.length}
+          width={300}
+          color="blue"
+        />
+      )}
       <Text>
-        {1} / {subTasks.length}
+        {finishedSubTask} / {subTasks.length}
       </Text>
     </>
   );
