@@ -13,8 +13,6 @@ export default function SubTasksScreen({ navigation, route }) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/task/sub/${taskID}`);
       const data = await response.json();
-
-      console.log(data);
       setSubTasks(data);
     } catch (error) {
       console.error("Failed to fetch subTasks in SubTasksScreen:", error);
