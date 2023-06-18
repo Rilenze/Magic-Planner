@@ -37,14 +37,9 @@ export default function TasksScreen({ navigation, route }) {
   }, []);
 
   return (
-    <>
+    <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
       <ScrollView>
-        <View
-          style={[
-            styles.containerTasks,
-            { backgroundColor: settings.colorForBackground },
-          ]}
-        >
+        <View style={styles.containerTasks}>
           <View style={styles.tasksWrapper}>
             <Text style={styles.title}>Prioritetni zadaci</Text>
             <View style={styles.tasks}>
@@ -101,7 +96,7 @@ export default function TasksScreen({ navigation, route }) {
           </View>
         </View>
       </ScrollView>
-    </>
+    </View>
   );
 }
 

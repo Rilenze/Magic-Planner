@@ -6,10 +6,13 @@ export default function SubTask({
   subTaskColor,
   textSize,
   textStyle,
+  textColor,
 }) {
   return (
     <View style={[styles.container, { backgroundColor: subTaskColor }]}>
-      <Text style={styles.opis}>Opis zadatka: {subTask.description}</Text>
+      <Text style={{ fontSize: textSize, color: textColor }}>
+        Opis zadatka: {subTask.description}
+      </Text>
     </View>
   );
 }
@@ -20,6 +23,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
   },
-  naziv: {},
-  opis: {},
 });
