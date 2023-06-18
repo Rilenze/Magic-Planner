@@ -12,9 +12,32 @@ export default function SubTask({
   const [isChecked, setChecked] = useState(false);
   const [textLine, setTextLine] = useState("none");
 
+  const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
+
+  async function updateFinishedSubTasks() {
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/task/sub/done/${subTask.id}`,
+        {
+          method: "PUT",
+        }
+      );
+      console.log("Uspjesno updejtovan task sa id-om: " + subTask.id);
+    } catch (error) {
+      console.error("Failed to update finished task in subTaks:", error);
+    }
+  }
+
   useEffect(() => {
-    if (isChecked) setTextLine("line-through");
-    else if (!isChecked) setTextLine("none");
+    if (subTask.done) setChecked(true);
+    else setChecked(false);
+  }, []);
+
+  useEffect(() => {
+    if (isChecked) {
+      setTextLine("line-through");
+      updateFinishedSubTasks();
+    } else if (!isChecked) setTextLine("none");
   }, [isChecked]);
 
   return (
@@ -49,8 +72,8 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     margin: 8,
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
   },
   textBox: {
     maxWidth: 250,
