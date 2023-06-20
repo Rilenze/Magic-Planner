@@ -1,3 +1,4 @@
+import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import * as Progress from "react-native-progress";
@@ -38,6 +39,9 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
         <Text style={styles.opis}>Opis zadatka: {task.description}</Text>
         <Text>Datum izvršavanja: {task.dueDate}</Text>
         <Text>Vrijeme izvršavanja: {task.dueTime}</Text>
+        {finishedSubTasks / subTasks.length == 1 ? (
+          <Checkbox value={true} style={styles.checkbox} />
+        ) : undefined}
       </View>
       {finishedSubTasks === 0 ? (
         <Progress.Bar width={300} color="blue" />
@@ -45,7 +49,10 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
         <Progress.Bar
           progress={finishedSubTasks / subTasks.length}
           width={300}
+          height={10}
           color="blue"
+          borderColor="black"
+          borderWidth={2}
         />
       )}
       <Text>
@@ -63,4 +70,13 @@ const styles = StyleSheet.create({
   },
   naziv: {},
   opis: {},
+  checkbox: {
+    marginTop: 10,
+    width: 30,
+    height: 30,
+    borderRadius: 10,
+    right: 15,
+    bottom: 15,
+    position: "absolute",
+  },
 });

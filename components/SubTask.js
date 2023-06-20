@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import Checkbox from "expo-checkbox";
 
 export default function SubTask({
@@ -41,7 +41,10 @@ export default function SubTask({
   }, [isChecked]);
 
   return (
-    <View style={[styles.container, { backgroundColor: subTaskColor }]}>
+    <Pressable
+      style={[styles.container, { backgroundColor: subTaskColor }]}
+      onPress={() => (isChecked ? setChecked(false) : setChecked(true))}
+    >
       <View style={styles.textBox}>
         <Text
           style={{
@@ -58,7 +61,7 @@ export default function SubTask({
         value={isChecked}
         onValueChange={setChecked}
       />
-    </View>
+    </Pressable>
   );
 }
 

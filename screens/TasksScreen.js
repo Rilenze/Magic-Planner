@@ -36,6 +36,10 @@ export default function TasksScreen({ navigation, route }) {
     fetchSettings();
   }, []);
 
+  useEffect(() => {
+    console.log("Backkkk");
+  }, [navigation]);
+
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
       <ScrollView>
