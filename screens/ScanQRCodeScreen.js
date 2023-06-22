@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ScanQRCodeScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -24,6 +25,16 @@ export default function ScanQRCodeScreen({ navigation }) {
     setStringCodes(data);
   }
 
+  const storeData = async (value) => {
+    try {
+      console.log(value);
+      await AsyncStorage.setItem("account", value);
+      console.log("Account id stored");
+    } catch (e) {
+      console.log("Error when storing data");
+    }
+  };
+
   useEffect(() => {
     askForCameraPermission();
     fetchStringCodes();
@@ -36,7 +47,8 @@ export default function ScanQRCodeScreen({ navigation }) {
     stringCodes.forEach((string) => {
       if (string.phoneLoginString == data) {
         console.log("Nadjen qr code i njegov id: " + string.accountId);
-        navigation.navigate("Tasks", { accountID: string.accountId });
+        storeData(string.accountId.toString());
+        //navigation.navigate("Tasks", { accountID: string.accountId });
       }
     });
   };
