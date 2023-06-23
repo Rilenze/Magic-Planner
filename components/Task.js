@@ -20,6 +20,7 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
       for (let i = 0; i < data.length; i++) {
         if (data[i].done) counter++;
       }
+
       setFinishedSubTasks(counter);
     } catch (error) {
       console.error("Failed to fetch subTasks in Task:", error);
@@ -32,32 +33,36 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
 
   return (
     <>
-      <View style={[styles.container, { backgroundColor: taskColor }]}>
-        <Text style={[styles.naziv, { fontSize: textSize }]}>
-          Naziv zadatka: {task.taskName}
-        </Text>
-        <Text style={styles.opis}>Opis zadatka: {task.description}</Text>
-        <Text>Datum izvršavanja: {task.dueDate}</Text>
-        <Text>Vrijeme izvršavanja: {task.dueTime}</Text>
-        {finishedSubTasks / subTasks.length == 1 ? (
-          <Checkbox value={true} style={styles.checkbox} />
-        ) : undefined}
-      </View>
-      {finishedSubTasks === 0 ? (
-        <Progress.Bar width={300} color="blue" />
-      ) : (
-        <Progress.Bar
-          progress={finishedSubTasks / subTasks.length}
-          width={300}
-          height={10}
-          color="blue"
-          borderColor="black"
-          borderWidth={2}
-        />
-      )}
-      <Text>
-        {finishedSubTasks} / {subTasks.length}
-      </Text>
+      {finishedSubTasks !== subTasks.length ? (
+        <>
+          <View style={[styles.container, { backgroundColor: taskColor }]}>
+            <Text style={[styles.naziv, { fontSize: textSize }]}>
+              Naziv zadatka: {task.taskName}
+            </Text>
+            <Text style={styles.opis}>Opis zadatka: {task.description}</Text>
+            <Text>Datum izvršavanja: {task.dueDate}</Text>
+            <Text>Vrijeme izvršavanja: {task.dueTime}</Text>
+            {finishedSubTasks / subTasks.length == 1 ? (
+              <Checkbox value={true} style={styles.checkbox} />
+            ) : undefined}
+          </View>
+          {finishedSubTasks === 0 ? (
+            <Progress.Bar width={300} color="blue" />
+          ) : (
+            <Progress.Bar
+              progress={finishedSubTasks / subTasks.length}
+              width={300}
+              height={10}
+              color="blue"
+              borderColor="black"
+              borderWidth={2}
+            />
+          )}
+          <Text>
+            {finishedSubTasks} / {subTasks.length}
+          </Text>
+        </>
+      ) : undefined}
     </>
   );
 }

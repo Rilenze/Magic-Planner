@@ -3,7 +3,8 @@ import { View, StyleSheet, Text, Pressable, ScrollView } from "react-native";
 import Task from "../components/Task";
 
 export default function TasksScreen({ navigation, route }) {
-  const [tasks, setTasks] = useState([]);
+  const [priorityTasks, setPriorityTasks] = useState([]);
+  const [normalTasks, setNormalTasks] = useState([]);
   const [settings, setSettings] = useState({});
   const { accountID } = route.params;
 
@@ -13,7 +14,14 @@ export default function TasksScreen({ navigation, route }) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/task/${accountID}`);
       const data = await response.json();
-      setTasks(data);
+      let priority = [];
+      let normal = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].priority) priority.push(data[i]);
+        else if (!data[i].priority) normal.push(data[i]);
+      }
+      setPriorityTasks(priority);
+      setNormalTasks(normal);
     } catch (error) {
       console.error("Failed to fetch tasks in TasksScreen:", error);
     }
@@ -36,10 +44,6 @@ export default function TasksScreen({ navigation, route }) {
     fetchSettings();
   }, []);
 
-  useEffect(() => {
-    console.log("Backkkk");
-  }, [navigation]);
-
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
       <ScrollView>
@@ -47,54 +51,51 @@ export default function TasksScreen({ navigation, route }) {
           <View style={styles.tasksWrapper}>
             <Text style={styles.title}>Prioritetni zadaci</Text>
             <View style={styles.tasks}>
-              {tasks.map((task) => {
-                if (task.priority) {
-                  return (
-                    <View key={task.id}>
-                      <Pressable
-                        onPress={() =>
-                          navigation.navigate("SubTasks", {
-                            taskID: task.id,
-                            settings: settings,
-                          })
-                        }
-                      >
-                        <Task
-                          task={task}
-                          taskColor={settings.colorOfPriorityTask}
-                          textSize={settings.fontSize}
-                          textStyle={settings.font}
-                        />
-                      </Pressable>
-                    </View>
-                  );
-                }
+              {priorityTasks.map((task) => {
+                console.log("ljutvoo");
+                return (
+                  <View key={task.id}>
+                    <Pressable
+                      onPress={() =>
+                        navigation.navigate("SubTasks", {
+                          taskID: task.id,
+                          settings: settings,
+                        })
+                      }
+                    >
+                      <Task
+                        task={task}
+                        taskColor={settings.colorOfPriorityTask}
+                        textSize={settings.fontSize}
+                        textStyle={settings.font}
+                      />
+                    </Pressable>
+                  </View>
+                );
               })}
             </View>
             <Text style={styles.title}>Manje prioritetni zadaci</Text>
             <View style={styles.tasks}>
-              {tasks.map((task) => {
-                if (!task.priority) {
-                  return (
-                    <View key={task.id}>
-                      <Pressable
-                        onPress={() =>
-                          navigation.navigate("SubTasks", {
-                            taskID: task.id,
-                            settings: settings,
-                          })
-                        }
-                      >
-                        <Task
-                          task={task}
-                          taskColor={settings.colorOfNormalTask}
-                          textSize={settings.fontSize}
-                          textStyle={settings.font}
-                        />
-                      </Pressable>
-                    </View>
-                  );
-                }
+              {normalTasks.map((task) => {
+                return (
+                  <View key={task.id}>
+                    <Pressable
+                      onPress={() =>
+                        navigation.navigate("SubTasks", {
+                          taskID: task.id,
+                          settings: settings,
+                        })
+                      }
+                    >
+                      <Task
+                        task={task}
+                        taskColor={settings.colorOfNormalTask}
+                        textSize={settings.fontSize}
+                        textStyle={settings.font}
+                      />
+                    </Pressable>
+                  </View>
+                );
               })}
             </View>
           </View>
