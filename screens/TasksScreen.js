@@ -52,7 +52,6 @@ export default function TasksScreen({ navigation, route }) {
             <Text style={styles.title}>Prioritetni zadaci</Text>
             <View style={styles.tasks}>
               {priorityTasks.map((task) => {
-                console.log("refreshh");
                 return (
                   <View key={task.id}>
                     <Pressable

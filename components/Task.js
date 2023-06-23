@@ -25,7 +25,6 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
   }
 
   useEffect(() => {
-    console.log("uniso u task");
     fetchSubTasks(task.id);
   }, []);
 

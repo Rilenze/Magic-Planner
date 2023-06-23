@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, ScrollView, Button } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  Button,
+  BackHandler,
+} from "react-native";
 import SubTask from "../components/SubTask";
-import { StackActions } from "@react-navigation/native";
 
 export default function SubTasksScreen({ navigation, route }) {
   const [subTasks, setSubTasks] = useState([]);
@@ -20,13 +26,26 @@ export default function SubTasksScreen({ navigation, route }) {
     }
   }
 
-  const returnToTaks = () => {
+  const returnToTasks = () => {
     navigation.popToTop();
     navigation.push("Tasks");
   };
 
   useEffect(() => {
     fetchSubTasks();
+
+    const backAction = () => {
+      navigation.popToTop();
+      navigation.push("Tasks");
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
   }, []);
 
   return (
@@ -34,7 +53,7 @@ export default function SubTasksScreen({ navigation, route }) {
       <View style={styles.backButton}>
         <Button
           title="Vrati se na dnevne zadatke"
-          onPress={returnToTaks}
+          onPress={returnToTasks}
         ></Button>
       </View>
       <ScrollView>
