@@ -53,12 +53,12 @@ export default function App() {
               name="Tasks"
               component={TasksScreen}
               initialParams={{ accountID: accountID }}
-              options={{ title: "Tasks" }}
+              options={{ title: "Tasks", headerShown: false }}
             />
             <Stack.Screen
               name="SubTasks"
               component={SubTasksScreen}
-              options={{ title: "SubTasks" }}
+              options={{ title: "SubTasks", headerShown: false }}
             />
           </>
         )}

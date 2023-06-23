@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Button } from "react-native";
 import SubTask from "../components/SubTask";
+import { StackActions } from "@react-navigation/native";
 
 export default function SubTasksScreen({ navigation, route }) {
   const [subTasks, setSubTasks] = useState([]);
@@ -19,12 +20,23 @@ export default function SubTasksScreen({ navigation, route }) {
     }
   }
 
+  const returnToTaks = () => {
+    navigation.popToTop();
+    navigation.push("Tasks");
+  };
+
   useEffect(() => {
     fetchSubTasks();
   }, []);
 
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
+      <View style={styles.backButton}>
+        <Button
+          title="Vrati se na dnevne zadatke"
+          onPress={returnToTaks}
+        ></Button>
+      </View>
       <ScrollView>
         <View style={styles.containerTasks}>
           <View style={styles.tasksWrapper}>
@@ -62,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tasksWrapper: {
-    paddingTop: 40,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
   tasks: {
@@ -71,5 +83,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
+  },
+  backButton: {
+    width: 240,
+    marginTop: 50,
+    marginLeft: 20,
   },
 });

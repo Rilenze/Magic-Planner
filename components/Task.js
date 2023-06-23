@@ -4,23 +4,20 @@ import { View, Text, StyleSheet } from "react-native";
 import * as Progress from "react-native-progress";
 
 export default function Task({ task, taskColor, textSize, textStyle }) {
-  const [subTasks, setSubTasks] = useState([]);
   const [finishedSubTasks, setFinishedSubTasks] = useState(0);
+  const [subTasks, setSubTasks] = useState([]);
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
-  async function fetchSubTasks() {
+  async function fetchSubTasks(id) {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/v1/task/sub/${task.id}`
-      );
+      const response = await fetch(`${API_BASE_URL}/api/v1/task/sub/${id}`);
       const data = await response.json();
       setSubTasks(data);
       let counter = 0;
       for (let i = 0; i < data.length; i++) {
         if (data[i].done) counter++;
       }
-
       setFinishedSubTasks(counter);
     } catch (error) {
       console.error("Failed to fetch subTasks in Task:", error);
@@ -28,7 +25,8 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
   }
 
   useEffect(() => {
-    fetchSubTasks();
+    console.log("uniso u task");
+    fetchSubTasks(task.id);
   }, []);
 
   return (
