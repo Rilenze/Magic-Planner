@@ -1,9 +1,8 @@
-import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import * as Progress from "react-native-progress";
 
-export default function Task({ task, taskColor, textSize, textStyle }) {
+export default function Task({ task, settings, taskColor }) {
   const [finishedSubTasks, setFinishedSubTasks] = useState(0);
   const [subTasks, setSubTasks] = useState([]);
 
@@ -33,24 +32,71 @@ export default function Task({ task, taskColor, textSize, textStyle }) {
       {finishedSubTasks !== subTasks.length ? (
         <>
           <View style={[styles.container, { backgroundColor: taskColor }]}>
-            <Text style={[styles.naziv, { fontSize: textSize }]}>
-              Naziv zadatka: {task.taskName}
+            <Text
+              style={[
+                styles.defaultText,
+                { fontSize: settings.fontSize, color: settings.colorForFont },
+              ]}
+            >
+              Naziv zadatka:
             </Text>
-            <Text style={styles.opis}>Opis zadatka: {task.description}</Text>
-            <Text>Datum izvršavanja: {task.dueDate}</Text>
-            <Text>Vrijeme izvršavanja: {task.dueTime}</Text>
-            {finishedSubTasks / subTasks.length == 1 ? (
-              <Checkbox value={true} style={styles.checkbox} />
-            ) : undefined}
+            <Text
+              style={{
+                fontSize: settings.fontSize,
+                color: settings.colorForFont,
+                marginBottom: 20,
+              }}
+            >
+              {task.taskName}
+            </Text>
+
+            <Text
+              style={[
+                styles.defaultText,
+                { fontSize: settings.fontSize, color: settings.colorForFont },
+              ]}
+            >
+              Opis zadatka:
+            </Text>
+            <Text
+              style={{
+                fontSize: settings.fontSize,
+                color: settings.colorForFont,
+                marginBottom: 20,
+              }}
+            >
+              {task.description}
+            </Text>
+            <Text
+              style={[
+                styles.defaultText,
+                { fontSize: settings.fontSize, color: settings.colorForFont },
+              ]}
+            >
+              Vrijeme izvršavanja:
+            </Text>
+            <Text
+              style={{
+                fontSize: settings.fontSize,
+                color: settings.colorForFont,
+              }}
+            >
+              {task.dueTime}
+            </Text>
           </View>
           {finishedSubTasks === 0 ? (
-            <Progress.Bar width={300} color="blue" />
+            <Progress.Bar
+              width={300}
+              height={10}
+              borderColor="black"
+              borderWidth={2}
+            />
           ) : (
             <Progress.Bar
               progress={finishedSubTasks / subTasks.length}
               width={300}
               height={10}
-              color="blue"
+              color={settings.colorForProgress}
               borderColor="black"
               borderWidth={2}
             />
@@ -70,15 +116,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
   },
-  naziv: {},
-  opis: {},
-  checkbox: {
-    marginTop: 10,
-    width: 30,
-    height: 30,
-    borderRadius: 10,
-    right: 15,
-    bottom: 15,
-    position: "absolute",
+
+  defaultText: {
+    textDecorationLine: "underline",
+    fontWeight: "bold",
   },
+  opis: {},
 });

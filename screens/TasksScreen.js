@@ -55,6 +55,7 @@ export default function TasksScreen({ navigation, route }) {
                 return (
                   <View key={task.id}>
                     <Pressable
+                      style={styles.taskPressable}
                       onPress={() =>
                         navigation.navigate("SubTasks", {
                           taskID: task.id,
@@ -64,9 +65,8 @@ export default function TasksScreen({ navigation, route }) {
                     >
                       <Task
                         task={task}
+                        settings={settings}
                         taskColor={settings.colorOfPriorityTask}
-                        textSize={settings.fontSize}
-                        textStyle={settings.font}
                       />
                     </Pressable>
                   </View>
@@ -79,6 +79,7 @@ export default function TasksScreen({ navigation, route }) {
                 return (
                   <View key={task.id}>
                     <Pressable
+                      style={styles.taskPressable}
                       onPress={() =>
                         navigation.navigate("SubTasks", {
                           taskID: task.id,
@@ -88,9 +89,8 @@ export default function TasksScreen({ navigation, route }) {
                     >
                       <Task
                         task={task}
+                        settings={settings}
                         taskColor={settings.colorOfNormalTask}
-                        textSize={settings.fontSize}
-                        textStyle={settings.font}
                       />
                     </Pressable>
                   </View>
@@ -113,10 +113,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   tasks: {
-    marginTop: 20,
+    //marginTop: 20,
+    marginBottom: 30,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
+  },
+  taskPressable: {
+    marginTop: 20,
   },
 });
