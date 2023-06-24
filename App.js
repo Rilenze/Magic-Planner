@@ -28,7 +28,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    //getData();
+    getData();
   }, []);
 
   return (
@@ -39,12 +39,12 @@ export default function App() {
             <Stack.Screen
               name="Home"
               component={HomeScreen}
-              options={{ title: "Welcome" }}
+              options={{ title: "Welcome", headerShown: false }}
             />
             <Stack.Screen
               name="ScanQRCode"
               component={ScanQRCodeScreen}
-              options={{ title: "Scan" }}
+              options={{ title: "Scan", headerShown: false }}
             />
           </>
         ) : (

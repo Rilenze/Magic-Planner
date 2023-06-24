@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Button, View, StyleSheet, Image, Linking, Alert } from "react-native";
+import {
+  Button,
+  View,
+  StyleSheet,
+  Image,
+  Linking,
+  Alert,
+  Pressable,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 export default function HomeScreen({ navigation }) {
@@ -33,8 +43,12 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/MagicPlanner.png")}></Image>
-      <Button title="Scan QR code to login" onPress={handleScanButton}></Button>
+      <View style={styles.image}>
+        <Image source={require("../assets/MagicPlanner.png")}></Image>
+      </View>
+      <TouchableOpacity style={styles.scanButton} onPress={handleScanButton}>
+        <Text style={styles.text}>Scan QR code to login</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -44,6 +58,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    //justifyContent: "center",
+  },
+  image: {
+    marginTop: 80,
+  },
+  scanButton: {
+    backgroundColor: "#2196F3",
+    padding: 15,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 80,
+  },
+  text: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "bold",
   },
 });
