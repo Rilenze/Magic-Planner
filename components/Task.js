@@ -24,6 +24,7 @@ export default function Task({ task, settings, taskColor }) {
   }
 
   useEffect(() => {
+    console.log("Task");
     fetchSubTasks(task.id);
   }, []);
 

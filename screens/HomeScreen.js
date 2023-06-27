@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   View,
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 80,
+    marginRight: 10,
   },
   scanButton: {
     backgroundColor: "#2196F3",

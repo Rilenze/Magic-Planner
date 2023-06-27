@@ -78,59 +78,83 @@ export default function TasksScreen({ navigation, route }) {
     fetchSettings();
   }, []);
 
+  if (priorityTasks.length == 0 && normalTasks.length == 0) {
+    return (
+      <View
+        style={[
+          styles.congratulationsBox,
+          { backgroundColor: settings.colorForBackground },
+        ]}
+      >
+        <Text style={styles.congratulationsText}>
+          Čestitamo! Završili ste sve zadatke za danas!
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
       <ScrollView>
         <View style={styles.containerTasks}>
           <View style={styles.tasksWrapper}>
-            <Text style={styles.title}>Prioritetni zadaci</Text>
-            <View style={styles.tasks}>
-              {priorityTasks.map((task) => {
-                return (
-                  <View key={task.id}>
-                    <Pressable
-                      style={styles.taskPressable}
-                      onPress={() =>
-                        navigation.navigate("SubTasks", {
-                          taskID: task.id,
-                          settings: settings,
-                        })
-                      }
-                    >
-                      <Task
-                        task={task}
-                        settings={settings}
-                        taskColor={settings.colorOfPriorityTask}
-                      />
-                    </Pressable>
-                  </View>
-                );
-              })}
-            </View>
-            <Text style={styles.title}>Manje prioritetni zadaci</Text>
-            <View style={styles.tasks}>
-              {normalTasks.map((task) => {
-                return (
-                  <View key={task.id}>
-                    <Pressable
-                      style={styles.taskPressable}
-                      onPress={() =>
-                        navigation.navigate("SubTasks", {
-                          taskID: task.id,
-                          settings: settings,
-                        })
-                      }
-                    >
-                      <Task
-                        task={task}
-                        settings={settings}
-                        taskColor={settings.colorOfNormalTask}
-                      />
-                    </Pressable>
-                  </View>
-                );
-              })}
-            </View>
+            {priorityTasks.length != 0 ? (
+              <>
+                <Text style={styles.title}>Prioritetni zadaci</Text>
+                <View style={styles.tasks}>
+                  {priorityTasks.map((task) => {
+                    return (
+                      <View key={task.id}>
+                        <Pressable
+                          style={styles.taskPressable}
+                          onPress={() =>
+                            navigation.navigate("SubTasks", {
+                              taskID: task.id,
+                              settings: settings,
+                            })
+                          }
+                        >
+                          <Task
+                            task={task}
+                            settings={settings}
+                            taskColor={settings.colorOfPriorityTask}
+                          />
+                        </Pressable>
+                      </View>
+                    );
+                  })}
+                </View>
+              </>
+            ) : undefined}
+
+            {normalTasks.length != 0 ? (
+              <>
+                <Text style={styles.title}>Manje prioritetni zadaci</Text>
+                <View style={styles.tasks}>
+                  {normalTasks.map((task) => {
+                    return (
+                      <View key={task.id}>
+                        <Pressable
+                          style={styles.taskPressable}
+                          onPress={() =>
+                            navigation.navigate("SubTasks", {
+                              taskID: task.id,
+                              settings: settings,
+                            })
+                          }
+                        >
+                          <Task
+                            task={task}
+                            settings={settings}
+                            taskColor={settings.colorOfNormalTask}
+                          />
+                        </Pressable>
+                      </View>
+                    );
+                  })}
+                </View>
+              </>
+            ) : undefined}
           </View>
         </View>
       </ScrollView>
@@ -156,5 +180,14 @@ const styles = StyleSheet.create({
   },
   taskPressable: {
     marginTop: 20,
+  },
+  congratulationsText: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  congratulationsBox: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
