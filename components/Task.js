@@ -29,83 +29,79 @@ export default function Task({ task, settings, taskColor }) {
 
   return (
     <>
-      {finishedSubTasks !== subTasks.length ? (
-        <>
-          <View style={[styles.container, { backgroundColor: taskColor }]}>
-            <Text
-              style={[
-                styles.defaultText,
-                { fontSize: settings.fontSize, color: settings.colorForFont },
-              ]}
-            >
-              Naziv zadatka:
-            </Text>
-            <Text
-              style={{
-                fontSize: settings.fontSize,
-                color: settings.colorForFont,
-                marginBottom: 20,
-              }}
-            >
-              {task.taskName}
-            </Text>
+      <View style={[styles.container, { backgroundColor: taskColor }]}>
+        <Text
+          style={[
+            styles.defaultText,
+            { fontSize: settings.fontSize, color: settings.colorForFont },
+          ]}
+        >
+          Naziv zadatka:
+        </Text>
+        <Text
+          style={{
+            fontSize: settings.fontSize,
+            color: settings.colorForFont,
+            marginBottom: 20,
+          }}
+        >
+          {task.taskName}
+        </Text>
 
-            <Text
-              style={[
-                styles.defaultText,
-                { fontSize: settings.fontSize, color: settings.colorForFont },
-              ]}
-            >
-              Opis zadatka:
-            </Text>
-            <Text
-              style={{
-                fontSize: settings.fontSize,
-                color: settings.colorForFont,
-                marginBottom: 20,
-              }}
-            >
-              {task.description}
-            </Text>
-            <Text
-              style={[
-                styles.defaultText,
-                { fontSize: settings.fontSize, color: settings.colorForFont },
-              ]}
-            >
-              Vrijeme izvršavanja:
-            </Text>
-            <Text
-              style={{
-                fontSize: settings.fontSize,
-                color: settings.colorForFont,
-              }}
-            >
-              {task.dueTime}
-            </Text>
-          </View>
-          {finishedSubTasks === 0 ? (
-            <Progress.Bar
-              width={300}
-              height={10}
-              borderColor="black"
-              borderWidth={2}
-            />
-          ) : (
-            <Progress.Bar
-              progress={finishedSubTasks / subTasks.length}
-              width={300}
-              height={10}
-              color={settings.colorForProgress}
-              borderColor="black"
-              borderWidth={2}
-            />
-          )}
-          <Text>
-            {finishedSubTasks} / {subTasks.length}
-          </Text>
-        </>
-      ) : undefined}
+        <Text
+          style={[
+            styles.defaultText,
+            { fontSize: settings.fontSize, color: settings.colorForFont },
+          ]}
+        >
+          Opis zadatka:
+        </Text>
+        <Text
+          style={{
+            fontSize: settings.fontSize,
+            color: settings.colorForFont,
+            marginBottom: 20,
+          }}
+        >
+          {task.description}
+        </Text>
+        <Text
+          style={[
+            styles.defaultText,
+            { fontSize: settings.fontSize, color: settings.colorForFont },
+          ]}
+        >
+          Vrijeme izvršavanja:
+        </Text>
+        <Text
+          style={{
+            fontSize: settings.fontSize,
+            color: settings.colorForFont,
+          }}
+        >
+          {task.dueTime}
+        </Text>
+      </View>
+      {finishedSubTasks === 0 ? (
+        <Progress.Bar
+          width={300}
+          height={10}
+          borderColor="black"
+          borderWidth={2}
+        />
+      ) : (
+        <Progress.Bar
+          progress={finishedSubTasks / subTasks.length}
+          width={300}
+          height={10}
+          color={settings.colorForProgress}
+          borderColor="black"
+          borderWidth={2}
+        />
+      )}
+      <Text>
+        {finishedSubTasks} / {subTasks.length}
+      </Text>
     </>
   );
 }

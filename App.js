@@ -32,37 +32,40 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {accountID === null ? (
-          <>
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{ title: "Welcome", headerShown: false }}
-            />
-            <Stack.Screen
-              name="ScanQRCode"
-              component={ScanQRCodeScreen}
-              options={{ title: "Scan", headerShown: false }}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="Tasks"
-              component={TasksScreen}
-              initialParams={{ accountID: accountID }}
-              options={{ title: "Tasks", headerShown: false }}
-            />
-            <Stack.Screen
-              name="SubTasks"
-              component={SubTasksScreen}
-              options={{ title: "SubTasks", headerShown: false }}
-            />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <StatusBar hidden />
+      <NavigationContainer>
+        <Stack.Navigator>
+          {accountID === null ? (
+            <>
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ title: "Welcome", headerShown: false }}
+              />
+              <Stack.Screen
+                name="ScanQRCode"
+                component={ScanQRCodeScreen}
+                options={{ title: "Scan", headerShown: false }}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                name="Tasks"
+                component={TasksScreen}
+                initialParams={{ accountID: accountID }}
+                options={{ title: "Tasks", headerShown: false }}
+              />
+              <Stack.Screen
+                name="SubTasks"
+                component={SubTasksScreen}
+                options={{ title: "SubTasks", headerShown: false }}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }

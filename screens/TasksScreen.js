@@ -10,16 +10,50 @@ export default function TasksScreen({ navigation, route }) {
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
+  function getCurrentDate() {
+    var d = new Date(),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
+
+  function todayTask(taskDate) {
+    if (taskDate === getCurrentDate) return true;
+    else return false;
+  }
+
+  function compareTimes(a, b) {
+    if (a.dueTime > b.dueTime) return 1;
+    if (a.dueTime < b.dueTime) return -1;
+  }
+
   async function fetchTasks() {
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/task/${accountID}`);
       const data = await response.json();
       let priority = [];
       let normal = [];
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].priority) priority.push(data[i]);
-        else if (!data[i].priority) normal.push(data[i]);
-      }
+
+      data.forEach((element) => {
+        if (!element.done && todayTask(element.dueDate)) {
+          if (element.priority) priority.push(element);
+          else if (!element.priority) normal.push(element);
+        }
+      });
+
+      priority.sort(function (a, b) {
+        return compareTimes(a, b);
+      });
+
+      normal.sort(function (a, b) {
+        return compareTimes(a, b);
+      });
+
       setPriorityTasks(priority);
       setNormalTasks(normal);
     } catch (error) {
