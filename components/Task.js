@@ -83,11 +83,12 @@ export default function Task({ task, settings, taskColor }) {
           {task.dueTime}
         </Text>
       </View>
+
       {finishedSubTasks === 0 ? (
         <Progress.Bar
           width={300}
           height={10}
-          borderColor="black"
+          borderColor={settings.colorForFont}
           borderWidth={2}
         />
       ) : (
@@ -96,11 +97,16 @@ export default function Task({ task, settings, taskColor }) {
           width={300}
           height={10}
           color={settings.colorForProgress}
-          borderColor="black"
+          borderColor={settings.colorForFont}
           borderWidth={2}
         />
       )}
-      <Text>
+      <Text
+        style={[
+          styles.progressText,
+          { color: settings.colorForFont, fontSize: settings.fontSize },
+        ]}
+      >
         {finishedSubTasks} / {subTasks.length}
       </Text>
     </>
@@ -118,5 +124,8 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     fontWeight: "bold",
   },
-  opis: {},
+  progressText: {
+    fontWeight: "bold",
+    marginTop: 10,
+  },
 });

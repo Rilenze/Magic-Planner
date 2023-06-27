@@ -11,14 +11,17 @@ import SubTask from "../components/SubTask";
 
 export default function SubTasksScreen({ navigation, route }) {
   const [subTasks, setSubTasks] = useState([]);
-  const { taskID } = route.params;
+  const { task } = route.params;
   const { settings } = route.params;
+  const { colorOfSubTask } = route.params;
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
   async function fetchSubTasks() {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/task/sub/${taskID}`);
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/task/sub/${task.id}`
+      );
       const data = await response.json();
       setSubTasks(data);
     } catch (error) {
@@ -59,17 +62,17 @@ export default function SubTasksScreen({ navigation, route }) {
       <ScrollView>
         <View style={styles.containerTasks}>
           <View style={styles.tasksWrapper}>
-            <Text style={styles.title}>Podzadaci</Text>
+            <Text style={[styles.title, { color: settings.colorForFont }]}>
+              Podzadaci
+            </Text>
             <View style={styles.tasks}>
               {subTasks.map((subTask) => {
                 return (
                   <View key={subTask.id}>
                     <SubTask
                       subTask={subTask}
-                      subTaskColor={settings.colorForSubtask}
-                      textSize={settings.fontSize}
-                      textStyle={settings.font}
-                      textColor={settings.colorForFont}
+                      subTaskColor={colorOfSubTask}
+                      settings={settings}
                     />
                   </View>
                 );

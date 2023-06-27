@@ -8,6 +8,20 @@ export default function TasksScreen({ navigation, route }) {
   const [settings, setSettings] = useState({});
   const { accountID } = route.params;
 
+  // const settings = {
+  //   id: 37,
+  //   accountId: 37,
+  //   font: "Palatino Linotype",
+  //   fontSize: 22,
+  //   colorOfPriorityTask: "#FF6347",
+  //   colorOfNormalTask: "#FFFFFF",
+  //   colorForSubtask: "#FF6347",
+  //   colorForFont: "#141414",
+  //   colorForBackground: "#FFD700",
+  //   colorForProgress: "#00BFFF",
+  //   phoneLoginString: "1AON081",
+  // };
+
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
   function getCurrentDate() {
@@ -86,7 +100,9 @@ export default function TasksScreen({ navigation, route }) {
           { backgroundColor: settings.colorForBackground },
         ]}
       >
-        <Text style={styles.congratulationsText}>
+        <Text
+          style={[styles.congratulationsText, { color: settings.colorForFont }]}
+        >
           Čestitamo! Završili ste sve zadatke za danas!
         </Text>
       </View>
@@ -100,7 +116,9 @@ export default function TasksScreen({ navigation, route }) {
           <View style={styles.tasksWrapper}>
             {priorityTasks.length != 0 ? (
               <>
-                <Text style={styles.title}>Prioritetni zadaci</Text>
+                <Text style={[styles.title, { color: settings.colorForFont }]}>
+                  Prioritetni zadaci
+                </Text>
                 <View style={styles.tasks}>
                   {priorityTasks.map((task) => {
                     return (
@@ -109,8 +127,9 @@ export default function TasksScreen({ navigation, route }) {
                           style={styles.taskPressable}
                           onPress={() =>
                             navigation.navigate("SubTasks", {
-                              taskID: task.id,
+                              task: task,
                               settings: settings,
+                              colorOfSubTask: settings.colorOfPriorityTask,
                             })
                           }
                         >
@@ -129,7 +148,9 @@ export default function TasksScreen({ navigation, route }) {
 
             {normalTasks.length != 0 ? (
               <>
-                <Text style={styles.title}>Manje prioritetni zadaci</Text>
+                <Text style={[styles.title, { color: settings.colorForFont }]}>
+                  Manje prioritetni zadaci
+                </Text>
                 <View style={styles.tasks}>
                   {normalTasks.map((task) => {
                     return (
@@ -138,8 +159,9 @@ export default function TasksScreen({ navigation, route }) {
                           style={styles.taskPressable}
                           onPress={() =>
                             navigation.navigate("SubTasks", {
-                              taskID: task.id,
+                              task: task,
                               settings: settings,
+                              colorOfSubTask: settings.colorOfNormalTask,
                             })
                           }
                         >

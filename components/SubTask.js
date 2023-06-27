@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Settings } from "react-native";
 import Checkbox from "expo-checkbox";
 
-export default function SubTask({
-  subTask,
-  subTaskColor,
-  textSize,
-  textStyle,
-  textColor,
-}) {
+export default function SubTask({ subTask, subTaskColor, settings }) {
   const [isChecked, setChecked] = useState(false);
   const [textLine, setTextLine] = useState("none");
 
@@ -48,8 +42,8 @@ export default function SubTask({
       <View style={styles.textBox}>
         <Text
           style={{
-            fontSize: textSize,
-            color: textColor,
+            fontSize: settings.fontSize,
+            color: settings.colorForFont,
             textDecorationLine: textLine,
           }}
         >
