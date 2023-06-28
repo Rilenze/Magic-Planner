@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable, Settings } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import Checkbox from "expo-checkbox";
 
 export default function SubTask({ subTask, subTaskColor, settings }) {
-  const [isChecked, setChecked] = useState(false);
-  const [textLine, setTextLine] = useState("none");
+  const [isChecked, setChecked] = useState(subTask.done);
+  const [textLine, setTextLine] = useState(
+    subTask.done ? "line-through" : "none"
+  );
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
@@ -16,30 +18,15 @@ export default function SubTask({ subTask, subTaskColor, settings }) {
           method: "PUT",
         }
       );
-      console.log("Uspjesno updejtovan task sa id-om: " + subTask.id);
+      console.log("Updated sub task with id: " + subTask.id);
     } catch (error) {
       console.error("Failed to update finished task in subTaks:", error);
     }
   }
 
-  useEffect(() => {
-    if (subTask.done) setChecked(true);
-    else setChecked(false);
-  }, []);
-
-  useEffect(() => {
-    if (isChecked) {
-      setTextLine("line-through");
-      updateFinishedSubTasks();
-    } else if (!isChecked) setTextLine("none");
-  }, [isChecked]);
-
   return (
-    <Pressable
-      style={[styles.container, { backgroundColor: subTaskColor }]}
-      onPress={() => (isChecked ? setChecked(false) : setChecked(true))}
-    >
-      <View style={styles.textBox}>
+    <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: subTaskColor }]}>
         <Text
           style={{
             fontSize: settings.fontSize,
@@ -53,26 +40,39 @@ export default function SubTask({ subTask, subTaskColor, settings }) {
       <Checkbox
         style={styles.checkbox}
         value={isChecked}
-        onValueChange={setChecked}
+        onValueChange={() => {
+          setChecked(!isChecked);
+          if (!isChecked) {
+            setTextLine("line-through");
+            updateFinishedSubTasks();
+          } else setTextLine("none");
+        }}
       />
-    </Pressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  // container: {
+  //   padding: 15,
+  //   borderRadius: 10,
+  //   marginBottom: 20,
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  // },
   container: {
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
+    padding: 10,
+    borderRadius: 15,
   },
   checkbox: {
     margin: 8,
     width: 35,
     height: 35,
+    borderRadius: 10,
   },
-  textBox: {
-    maxWidth: 250,
-  },
+  // textBox: {
+  //   maxWidth: 250,
+  // },
 });

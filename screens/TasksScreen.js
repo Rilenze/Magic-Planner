@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Pressable, ScrollView } from "react-native";
 import Task from "../components/Task";
+import WelcomeMessage from "../components/WelcomeMessage";
 
 export default function TasksScreen({ navigation, route }) {
   const [priorityTasks, setPriorityTasks] = useState([]);
   const [normalTasks, setNormalTasks] = useState([]);
-  const [settings, setSettings] = useState({});
+  //const [settings, setSettings] = useState({});
   const { accountID } = route.params;
 
-  // const settings = {
-  //   id: 37,
-  //   accountId: 37,
-  //   font: "Palatino Linotype",
-  //   fontSize: 22,
-  //   colorOfPriorityTask: "#FF6347",
-  //   colorOfNormalTask: "#FFFFFF",
-  //   colorForSubtask: "#FF6347",
-  //   colorForFont: "#141414",
-  //   colorForBackground: "#FFD700",
-  //   colorForProgress: "#00BFFF",
-  //   phoneLoginString: "1AON081",
-  // };
+  const settings = {
+    id: 37,
+    accountId: 37,
+    font: "Palatino Linotype",
+    fontSize: 22,
+    colorOfPriorityTask: "#FF6347",
+    colorOfNormalTask: "#00BFFF",
+    colorForSubtask: "#FF6347",
+    colorForFont: "#141414",
+    colorForBackground: "#FFD700",
+    colorForProgress: "#009900",
+    phoneLoginString: "1AON081",
+  };
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
@@ -37,7 +38,7 @@ export default function TasksScreen({ navigation, route }) {
   }
 
   function todayTask(taskDate) {
-    if (taskDate === getCurrentDate) return true;
+    if (taskDate !== getCurrentDate) return true;
     else return false;
   }
 
@@ -89,7 +90,7 @@ export default function TasksScreen({ navigation, route }) {
 
   useEffect(() => {
     fetchTasks();
-    fetchSettings();
+    //fetchSettings();
   }, []);
 
   if (priorityTasks.length == 0 && normalTasks.length == 0) {
@@ -100,6 +101,7 @@ export default function TasksScreen({ navigation, route }) {
           { backgroundColor: settings.colorForBackground },
         ]}
       >
+        <WelcomeMessage name="Sadeta" male={false} />
         <Text
           style={[styles.congratulationsText, { color: settings.colorForFont }]}
         >
@@ -112,6 +114,7 @@ export default function TasksScreen({ navigation, route }) {
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
       <ScrollView>
+        <WelcomeMessage name="Sadeta" male={false} />
         <View style={styles.containerTasks}>
           <View style={styles.tasksWrapper}>
             {priorityTasks.length != 0 ? (
@@ -187,6 +190,7 @@ export default function TasksScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   containerTasks: {
     flex: 1,
+    marginTop: 50,
   },
   tasksWrapper: {
     paddingTop: 40,
