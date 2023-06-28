@@ -38,7 +38,7 @@ export default function TasksScreen({ navigation, route }) {
   }
 
   function todayTask(taskDate) {
-    if (taskDate === getCurrentDate) return true;
+    if (taskDate == getCurrentDate()) return true;
     else return false;
   }
 
