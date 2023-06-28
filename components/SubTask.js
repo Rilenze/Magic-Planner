@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     margin: 8,
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 40,
     borderRadius: 10,
   },
   // textBox: {

@@ -8,6 +8,8 @@ import {
   BackHandler,
 } from "react-native";
 import SubTask from "../components/SubTask";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function SubTasksScreen({ navigation, route }) {
   const [subTasks, setSubTasks] = useState([]);
@@ -54,10 +56,12 @@ export default function SubTasksScreen({ navigation, route }) {
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
       <View style={styles.backButton}>
-        <Button
-          title="Vrati se na dnevne zadatke"
+        <Ionicons
+          name="arrow-back"
           onPress={returnToTasks}
-        ></Button>
+          size={50}
+          color={settings.colorForFont}
+        ></Ionicons>
       </View>
       <ScrollView>
         <View style={styles.containerTasks}>
@@ -103,12 +107,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   title: {
+    marginLeft: 10,
     fontSize: 24,
     fontWeight: "bold",
   },
   backButton: {
-    width: 240,
-    marginTop: 50,
-    marginLeft: 20,
+    marginTop: 10,
+    marginLeft: 10,
   },
 });

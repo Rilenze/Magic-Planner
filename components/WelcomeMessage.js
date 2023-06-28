@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   welcomeBox: {
-    position: "absolute",
-    top: 20,
-    left: 20,
+    alignItems: "center",
+    marginTop: 20,
   },
 });

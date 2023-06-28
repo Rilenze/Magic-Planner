@@ -38,7 +38,7 @@ export default function TasksScreen({ navigation, route }) {
   }
 
   function todayTask(taskDate) {
-    if (taskDate !== getCurrentDate) return true;
+    if (taskDate === getCurrentDate) return true;
     else return false;
   }
 
@@ -95,18 +95,18 @@ export default function TasksScreen({ navigation, route }) {
 
   if (priorityTasks.length == 0 && normalTasks.length == 0) {
     return (
-      <View
-        style={[
-          styles.congratulationsBox,
-          { backgroundColor: settings.colorForBackground },
-        ]}
-      >
+      <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
         <WelcomeMessage name="Sadeta" male={false} />
-        <Text
-          style={[styles.congratulationsText, { color: settings.colorForFont }]}
-        >
-          Čestitamo! Završili ste sve zadatke za danas!
-        </Text>
+        <View style={styles.congratulationBox}>
+          <Text
+            style={[
+              styles.congratulationsText,
+              { color: settings.colorForFont },
+            ]}
+          >
+            Čestitamo! Završili ste sve zadatke za danas!
+          </Text>
+        </View>
       </View>
     );
   }
@@ -193,11 +193,9 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   tasksWrapper: {
-    paddingTop: 40,
     paddingHorizontal: 20,
   },
   tasks: {
-    //marginTop: 20,
     marginBottom: 30,
   },
   title: {
@@ -207,13 +205,14 @@ const styles = StyleSheet.create({
   taskPressable: {
     marginTop: 20,
   },
-  congratulationsText: {
-    fontSize: 30,
-    fontWeight: "bold",
-  },
-  congratulationsBox: {
+  congratulationBox: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginHorizontal: 20,
+  },
+  congratulationsText: {
+    fontSize: 30,
+    fontWeight: "bold",
   },
 });
