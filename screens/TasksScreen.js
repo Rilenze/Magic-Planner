@@ -4,6 +4,8 @@ import Task from "../components/Task";
 import WelcomeMessage from "../components/WelcomeMessage";
 
 export default function TasksScreen({ navigation, route }) {
+  const [kidName, setKidName] = useState(null);
+  const [maleKid, setMaleKid] = useState(null);
   const [priorityTasks, setPriorityTasks] = useState([]);
   const [normalTasks, setNormalTasks] = useState([]);
   //const [settings, setSettings] = useState({});
@@ -38,13 +40,26 @@ export default function TasksScreen({ navigation, route }) {
   }
 
   function todayTask(taskDate) {
-    if (taskDate == getCurrentDate()) return true;
+    if (taskDate != getCurrentDate()) return true;
     else return false;
   }
 
   function compareTimes(a, b) {
     if (a.dueTime > b.dueTime) return 1;
     if (a.dueTime < b.dueTime) return -1;
+  }
+
+  async function fetchAccount() {
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/accounts/${accountID}`
+      );
+      const data = await response.json();
+      setKidName(data.kidName);
+      setMaleKid(data.kidMale);
+    } catch (error) {
+      console.error("Failed to fetch account in TasksScreen:", error);
+    }
   }
 
   async function fetchTasks() {
@@ -89,6 +104,7 @@ export default function TasksScreen({ navigation, route }) {
   }
 
   useEffect(() => {
+    fetchAccount();
     fetchTasks();
     //fetchSettings();
   }, []);
@@ -96,7 +112,7 @@ export default function TasksScreen({ navigation, route }) {
   if (priorityTasks.length == 0 && normalTasks.length == 0) {
     return (
       <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-        <WelcomeMessage name="Sadeta" male={false} />
+        <WelcomeMessage name={kidName} male={maleKid} />
         <View style={styles.congratulationBox}>
           <Text
             style={[
@@ -114,7 +130,7 @@ export default function TasksScreen({ navigation, route }) {
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
       <ScrollView>
-        <WelcomeMessage name="Sadeta" male={false} />
+        <WelcomeMessage name={kidName} male={maleKid} />
         <View style={styles.containerTasks}>
           <View style={styles.tasksWrapper}>
             {priorityTasks.length != 0 ? (

@@ -85,16 +85,16 @@ export default function Task({ task, settings, taskColor }) {
 
       {finishedSubTasks === 0 ? (
         <Progress.Bar
-          width={300}
-          height={10}
+          width={null}
+          height={15}
           borderColor={settings.colorForFont}
           borderWidth={2}
         />
       ) : (
         <Progress.Bar
           progress={finishedSubTasks / subTasks.length}
-          width={300}
-          height={10}
+          width={null}
+          height={15}
           color={settings.colorForProgress}
           borderColor={settings.colorForFont}
           borderWidth={2}
