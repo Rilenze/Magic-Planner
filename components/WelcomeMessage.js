@@ -27,5 +27,6 @@ const styles = StyleSheet.create({
   welcomeBox: {
     alignItems: "center",
     marginTop: 20,
+    marginBottom: 20,
   },
 });

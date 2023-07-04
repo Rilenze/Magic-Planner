@@ -57,6 +57,7 @@ export default function Task({ task, settings, taskColor }) {
           Opis zadatka:
         </Text>
         <Text
+          numberOfLines={1}
           style={{
             fontSize: settings.fontSize,
             color: settings.colorForFont,
@@ -117,6 +118,9 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
+    //borderColor: "black",
+    //borderStyle: "solid",
+    borderWidth: 3,
   },
 
   defaultText: {
