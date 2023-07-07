@@ -12,46 +12,14 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function SubTasksScreen({ navigation, route }) {
-  const [subTasks, setSubTasks] = useState([]);
   const { task } = route.params;
   const { settings } = route.params;
   const { colorOfSubTask } = route.params;
-
-  const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
-
-  async function fetchSubTasks() {
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/v1/task/sub/${task.id}`
-      );
-      const data = await response.json();
-      setSubTasks(data);
-    } catch (error) {
-      console.error("Failed to fetch subTasks in SubTasksScreen:", error);
-    }
-  }
+  const { subTasks } = route.params;
 
   const returnToTasks = () => {
-    navigation.popToTop();
-    navigation.push("Tasks");
+    navigation.navigate("Tasks");
   };
-
-  useEffect(() => {
-    fetchSubTasks();
-
-    const backAction = () => {
-      navigation.popToTop();
-      navigation.push("Tasks");
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-
-    return () => backHandler.remove();
-  }, []);
 
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
@@ -66,6 +34,12 @@ export default function SubTasksScreen({ navigation, route }) {
       <ScrollView>
         <View style={styles.containerTasks}>
           <View style={styles.tasksWrapper}>
+            <Text style={[styles.title, { color: settings.colorForFont }]}>
+              Opis zadatka
+            </Text>
+            <Text style={[styles.description, { fontSize: settings.fontSize }]}>
+              {task.description}
+            </Text>
             <Text style={[styles.title, { color: settings.colorForFont }]}>
               Podzadaci
             </Text>
@@ -114,5 +88,8 @@ const styles = StyleSheet.create({
   backButton: {
     marginTop: 10,
     marginLeft: 10,
+  },
+  description: {
+    margin: 15,
   },
 });

@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Pressable, ScrollView } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Pressable,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
 import Task from "../components/Task";
 import WelcomeMessage from "../components/WelcomeMessage";
 
@@ -8,8 +15,33 @@ export default function TasksScreen({ navigation, route }) {
   const [maleKid, setMaleKid] = useState(null);
   const [priorityTasks, setPriorityTasks] = useState([]);
   const [normalTasks, setNormalTasks] = useState([]);
+  const [subTasks, setSubTasks] = useState(new Map());
   //const [settings, setSettings] = useState({});
   const { accountID } = route.params;
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    console.log("prvi put");
+    fetchAccount();
+    fetchTasks();
+    //fetchSettings();
+
+    const unsubscribe = navigation.addListener("focus", () => {
+      // Perform actions or updates when the screen is focused
+      fetchTasks();
+      console.log("Screen focused");
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchTasks();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
 
   const settings = {
     id: 37,
@@ -66,6 +98,7 @@ export default function TasksScreen({ navigation, route }) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/task/${accountID}`);
       const data = await response.json();
+      fetchSubTasks(data);
       let priority = [];
       let normal = [];
 
@@ -91,6 +124,22 @@ export default function TasksScreen({ navigation, route }) {
     }
   }
 
+  async function fetchSubTasks(tasks) {
+    try {
+      let temp = new Map();
+
+      for (let i = 0; i < tasks.length; i++) {
+        const url = `${API_BASE_URL}/api/v1/task/sub/${tasks[i].id}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        temp.set(tasks[i].id, data);
+      }
+      setSubTasks(temp);
+    } catch (error) {
+      console.error("Failed to fetch subTasks in TasksScreen:", error);
+    }
+  }
+
   async function fetchSettings() {
     try {
       const response = await fetch(
@@ -103,33 +152,39 @@ export default function TasksScreen({ navigation, route }) {
     }
   }
 
-  useEffect(() => {
-    fetchAccount();
-    fetchTasks();
-    //fetchSettings();
-  }, []);
+  // if (priorityTasks.length == 0 && normalTasks.length == 0) {
+  //   return (
+  //     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
+  //       <WelcomeMessage name={kidName} male={maleKid} />
+  //       <View style={styles.congratulationBox}>
+  //         <Text
+  //           style={[
+  //             styles.congratulationsText,
+  //             { color: settings.colorForFont },
+  //           ]}
+  //         >
+  //           Čestitamo! Završili ste sve zadatke za danas!
+  //         </Text>
+  //       </View>
+  //     </View>
+  //   );
+  // }
 
-  if (priorityTasks.length == 0 && normalTasks.length == 0) {
+  if (subTasks.size == 0)
     return (
-      <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-        <WelcomeMessage name={kidName} male={maleKid} />
-        <View style={styles.congratulationBox}>
-          <Text
-            style={[
-              styles.congratulationsText,
-              { color: settings.colorForFont },
-            ]}
-          >
-            Čestitamo! Završili ste sve zadatke za danas!
-          </Text>
-        </View>
+      <View>
+        <Text>Loading sub tasks...</Text>
       </View>
     );
-  }
 
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-      <ScrollView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <WelcomeMessage name={kidName} male={maleKid} />
 
         {priorityTasks.length != 0 ? (
@@ -138,7 +193,13 @@ export default function TasksScreen({ navigation, route }) {
               Prioritetni zadaci
             </Text>
             <View style={styles.tasks}>
-              <ScrollView horizontal>
+              <ScrollView
+                horizontal
+                decelerationRate={0.9}
+                snapToInterval={305} //your element width
+                snapToAlignment={"start"}
+                showsHorizontalScrollIndicator={false}
+              >
                 {priorityTasks.map((task) => {
                   return (
                     <View key={task.id}>
@@ -149,6 +210,7 @@ export default function TasksScreen({ navigation, route }) {
                             task: task,
                             settings: settings,
                             colorOfSubTask: settings.colorOfPriorityTask,
+                            subTasks: subTasks.get(task.id),
                           })
                         }
                       >
@@ -156,6 +218,7 @@ export default function TasksScreen({ navigation, route }) {
                           task={task}
                           settings={settings}
                           taskColor={settings.colorOfPriorityTask}
+                          subTasks={subTasks.get(task.id)}
                         />
                       </Pressable>
                     </View>
@@ -172,7 +235,13 @@ export default function TasksScreen({ navigation, route }) {
               Manje prioritetni zadaci
             </Text>
             <View style={styles.tasks}>
-              <ScrollView horizontal>
+              <ScrollView
+                horizontal
+                decelerationRate={0.9}
+                snapToInterval={305} //your element width
+                snapToAlignment={"start"}
+                showsHorizontalScrollIndicator={false}
+              >
                 {normalTasks.map((task) => {
                   return (
                     <View key={task.id}>
@@ -183,6 +252,7 @@ export default function TasksScreen({ navigation, route }) {
                             task: task,
                             settings: settings,
                             colorOfSubTask: settings.colorOfNormalTask,
+                            subTasks: subTasks.get(task.id),
                           })
                         }
                       >
@@ -190,6 +260,7 @@ export default function TasksScreen({ navigation, route }) {
                           task={task}
                           settings={settings}
                           taskColor={settings.colorOfNormalTask}
+                          subTasks={subTasks.get(task.id)}
                         />
                       </Pressable>
                     </View>

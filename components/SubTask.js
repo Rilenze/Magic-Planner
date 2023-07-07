@@ -53,13 +53,6 @@ export default function SubTask({ subTask, subTaskColor, settings }) {
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   padding: 15,
-  //   borderRadius: 10,
-  //   marginBottom: 20,
-  //   flexDirection: "row",
-  //   justifyContent: "space-between",
-  // },
   container: {
     flex: 1,
     flexDirection: "row",
@@ -72,7 +65,4 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
   },
-  // textBox: {
-  //   maxWidth: 250,
-  // },
 });
