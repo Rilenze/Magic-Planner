@@ -6,6 +6,22 @@ export default function Task({ task, settings, taskColor, subTasks }) {
   const [finishedSubTasks, setFinishedSubTasks] = useState(0);
   const [numberOfSubTasks, setNumberOfSubTasks] = useState(0);
 
+  const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
+
+  async function updateFinishedTask() {
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/task/done/${task.id}`,
+        {
+          method: "PUT",
+        }
+      );
+      console.log("Updated task with id: " + task.id);
+    } catch (error) {
+      console.error("Failed to update finished task in Task:", error);
+    }
+  }
+
   function countFinishedSubTasks() {
     let counter = 0;
     let total = 0;
@@ -13,6 +29,9 @@ export default function Task({ task, settings, taskColor, subTasks }) {
       if (subTask.done) counter++;
       total++;
     });
+    if (counter == total) {
+      updateFinishedTask();
+    }
     setFinishedSubTasks(counter);
     setNumberOfSubTasks(total);
   }
@@ -20,18 +39,6 @@ export default function Task({ task, settings, taskColor, subTasks }) {
   useEffect(() => {
     countFinishedSubTasks();
   }, [subTasks]);
-
-  // useEffect(() => {
-  //   countFinishedSubTasks();
-  // }, [subTasks]);
-
-  // if (!subTasks) {
-  //   return (
-  //     <View>
-  //       <Text>Loading</Text>
-  //     </View>
-  //   );
-  // }
 
   return (
     <>
@@ -124,8 +131,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
-    //borderColor: "black",
-    //borderStyle: "solid",
     borderWidth: 3,
   },
 

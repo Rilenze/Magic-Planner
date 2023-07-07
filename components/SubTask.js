@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import Checkbox from "expo-checkbox";
 
 export default function SubTask({ subTask, subTaskColor, settings }) {

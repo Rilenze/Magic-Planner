@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Text,
   View,
   StyleSheet,
   ScrollView,
-  Button,
-  BackHandler,
+  TouchableOpacity,
 } from "react-native";
 import SubTask from "../components/SubTask";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function SubTasksScreen({ navigation, route }) {
@@ -17,20 +15,18 @@ export default function SubTasksScreen({ navigation, route }) {
   const { colorOfSubTask } = route.params;
   const { subTasks } = route.params;
 
-  const returnToTasks = () => {
-    navigation.navigate("Tasks");
-  };
-
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-      <View style={styles.backButton}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.navigate("Tasks")}
+      >
         <Ionicons
           name="arrow-back"
-          onPress={returnToTasks}
           size={50}
           color={settings.colorForFont}
         ></Ionicons>
-      </View>
+      </TouchableOpacity>
       <ScrollView>
         <View style={styles.containerTasks}>
           <View style={styles.tasksWrapper}>

@@ -6,6 +6,7 @@ import {
   Pressable,
   ScrollView,
   RefreshControl,
+  TouchableOpacity,
 } from "react-native";
 import Task from "../components/Task";
 import WelcomeMessage from "../components/WelcomeMessage";
@@ -21,7 +22,6 @@ export default function TasksScreen({ navigation, route }) {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    console.log("prvi put");
     fetchAccount();
     fetchTasks();
     //fetchSettings();
@@ -29,7 +29,6 @@ export default function TasksScreen({ navigation, route }) {
     const unsubscribe = navigation.addListener("focus", () => {
       // Perform actions or updates when the screen is focused
       fetchTasks();
-      console.log("Screen focused");
     });
 
     return unsubscribe;
@@ -72,7 +71,7 @@ export default function TasksScreen({ navigation, route }) {
   }
 
   function todayTask(taskDate) {
-    if (taskDate != getCurrentDate()) return true;
+    if (taskDate == getCurrentDate()) return true;
     else return false;
   }
 
@@ -203,7 +202,7 @@ export default function TasksScreen({ navigation, route }) {
                 {priorityTasks.map((task) => {
                   return (
                     <View key={task.id}>
-                      <Pressable
+                      <TouchableOpacity
                         style={styles.taskPressable}
                         onPress={() =>
                           navigation.navigate("SubTasks", {
@@ -220,7 +219,7 @@ export default function TasksScreen({ navigation, route }) {
                           taskColor={settings.colorOfPriorityTask}
                           subTasks={subTasks.get(task.id)}
                         />
-                      </Pressable>
+                      </TouchableOpacity>
                     </View>
                   );
                 })}
@@ -245,7 +244,7 @@ export default function TasksScreen({ navigation, route }) {
                 {normalTasks.map((task) => {
                   return (
                     <View key={task.id}>
-                      <Pressable
+                      <TouchableOpacity
                         style={styles.taskPressable}
                         onPress={() =>
                           navigation.navigate("SubTasks", {
@@ -262,7 +261,7 @@ export default function TasksScreen({ navigation, route }) {
                           taskColor={settings.colorOfNormalTask}
                           subTasks={subTasks.get(task.id)}
                         />
-                      </Pressable>
+                      </TouchableOpacity>
                     </View>
                   );
                 })}
