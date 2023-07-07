@@ -97,23 +97,25 @@ export default function Task({ task, settings, taskColor, subTasks }) {
         </Text>
       </View>
 
-      {finishedSubTasks === 0 ? (
-        <Progress.Bar
-          width={null}
-          height={15}
-          borderColor={settings.colorForFont}
-          borderWidth={2}
-        />
-      ) : (
-        <Progress.Bar
-          progress={finishedSubTasks / numberOfSubTasks}
-          width={null}
-          height={15}
-          color={settings.colorForProgress}
-          borderColor={settings.colorForFont}
-          borderWidth={2}
-        />
-      )}
+      <View style={styles.progress}>
+        {finishedSubTasks === 0 ? (
+          <Progress.Bar
+            width={null}
+            height={15}
+            borderColor={settings.colorForFont}
+            borderWidth={2}
+          />
+        ) : (
+          <Progress.Bar
+            progress={finishedSubTasks / numberOfSubTasks}
+            width={null}
+            height={15}
+            color={settings.colorForProgress}
+            borderColor={settings.colorForFont}
+            borderWidth={2}
+          />
+        )}
+      </View>
       <Text
         style={[
           styles.progressText,
@@ -131,13 +133,18 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
-    borderWidth: 3,
+    borderWidth: 2,
+    elevation: 8,
   },
 
   defaultText: {
     textDecorationLine: "underline",
     fontWeight: "bold",
   },
+  // progress: {
+  //   borderWidth: 0.5,
+  //   elevation: 15,
+  // },
   progressText: {
     fontWeight: "bold",
     marginTop: 10,

@@ -56,7 +56,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F5FFFA",
     alignItems: "center",
   },
   image: {
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     bottom: 80,
+    elevation: 5,
   },
   text: {
     color: "white",

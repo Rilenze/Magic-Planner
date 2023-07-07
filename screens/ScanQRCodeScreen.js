@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -46,7 +46,10 @@ export default function ScanQRCodeScreen() {
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFill}
+        style={{
+          width: Dimensions.get("window").width * 0.9,
+          height: Dimensions.get("window").height * 0.9,
+        }}
       />
     </View>
   );
@@ -54,8 +57,9 @@ export default function ScanQRCodeScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#F5FFFA",
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    //justifyContent: "center",
   },
 });

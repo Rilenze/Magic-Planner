@@ -26,7 +26,7 @@ export default function SubTask({ subTask, subTaskColor, settings }) {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.container, { backgroundColor: subTaskColor }]}>
+      <View style={[styles.subTask, { backgroundColor: subTaskColor }]}>
         <Text
           style={{
             fontSize: settings.fontSize,
@@ -56,13 +56,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
+    margin: 10,
+  },
+  subTask: {
+    flex: 1,
     padding: 10,
     borderRadius: 15,
+    elevation: 8,
+    borderWidth: 2,
   },
   checkbox: {
     margin: 8,
     width: 40,
     height: 40,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "black",
   },
 });

@@ -71,7 +71,7 @@ export default function TasksScreen({ navigation, route }) {
   }
 
   function todayTask(taskDate) {
-    if (taskDate == getCurrentDate()) return true;
+    if (taskDate != getCurrentDate()) return true;
     else return false;
   }
 
@@ -175,103 +175,103 @@ export default function TasksScreen({ navigation, route }) {
         <Text>Loading sub tasks...</Text>
       </View>
     );
+  else
+    return (
+      <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <WelcomeMessage name={kidName} male={maleKid} />
 
-  return (
-    <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <WelcomeMessage name={kidName} male={maleKid} />
+          {priorityTasks.length != 0 ? (
+            <>
+              <Text style={[styles.title, { color: settings.colorForFont }]}>
+                Prioritetni zadaci
+              </Text>
+              <View style={styles.tasks}>
+                <ScrollView
+                  horizontal
+                  decelerationRate={0.9}
+                  snapToInterval={305} //your element width
+                  snapToAlignment={"start"}
+                  showsHorizontalScrollIndicator={false}
+                >
+                  {priorityTasks.map((task) => {
+                    return (
+                      <View key={task.id}>
+                        <TouchableOpacity
+                          style={styles.taskPressable}
+                          onPress={() =>
+                            navigation.navigate("SubTasks", {
+                              task: task,
+                              settings: settings,
+                              colorOfSubTask: settings.colorOfPriorityTask,
+                              subTasks: subTasks.get(task.id),
+                            })
+                          }
+                        >
+                          <Task
+                            task={task}
+                            settings={settings}
+                            taskColor={settings.colorOfPriorityTask}
+                            subTasks={subTasks.get(task.id)}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+              </View>
+            </>
+          ) : undefined}
 
-        {priorityTasks.length != 0 ? (
-          <>
-            <Text style={[styles.title, { color: settings.colorForFont }]}>
-              Prioritetni zadaci
-            </Text>
-            <View style={styles.tasks}>
-              <ScrollView
-                horizontal
-                decelerationRate={0.9}
-                snapToInterval={305} //your element width
-                snapToAlignment={"start"}
-                showsHorizontalScrollIndicator={false}
-              >
-                {priorityTasks.map((task) => {
-                  return (
-                    <View key={task.id}>
-                      <TouchableOpacity
-                        style={styles.taskPressable}
-                        onPress={() =>
-                          navigation.navigate("SubTasks", {
-                            task: task,
-                            settings: settings,
-                            colorOfSubTask: settings.colorOfPriorityTask,
-                            subTasks: subTasks.get(task.id),
-                          })
-                        }
-                      >
-                        <Task
-                          task={task}
-                          settings={settings}
-                          taskColor={settings.colorOfPriorityTask}
-                          subTasks={subTasks.get(task.id)}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  );
-                })}
-              </ScrollView>
-            </View>
-          </>
-        ) : undefined}
-
-        {normalTasks.length != 0 ? (
-          <>
-            <Text style={[styles.title, { color: settings.colorForFont }]}>
-              Manje prioritetni zadaci
-            </Text>
-            <View style={styles.tasks}>
-              <ScrollView
-                horizontal
-                decelerationRate={0.9}
-                snapToInterval={305} //your element width
-                snapToAlignment={"start"}
-                showsHorizontalScrollIndicator={false}
-              >
-                {normalTasks.map((task) => {
-                  return (
-                    <View key={task.id}>
-                      <TouchableOpacity
-                        style={styles.taskPressable}
-                        onPress={() =>
-                          navigation.navigate("SubTasks", {
-                            task: task,
-                            settings: settings,
-                            colorOfSubTask: settings.colorOfNormalTask,
-                            subTasks: subTasks.get(task.id),
-                          })
-                        }
-                      >
-                        <Task
-                          task={task}
-                          settings={settings}
-                          taskColor={settings.colorOfNormalTask}
-                          subTasks={subTasks.get(task.id)}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  );
-                })}
-              </ScrollView>
-            </View>
-          </>
-        ) : undefined}
-      </ScrollView>
-    </View>
-  );
+          {normalTasks.length != 0 ? (
+            <>
+              <Text style={[styles.title, { color: settings.colorForFont }]}>
+                Manje prioritetni zadaci
+              </Text>
+              <View style={styles.tasks}>
+                <ScrollView
+                  horizontal
+                  decelerationRate={0.9}
+                  snapToInterval={305} //your element width
+                  snapToAlignment={"start"}
+                  showsHorizontalScrollIndicator={false}
+                >
+                  {normalTasks.map((task) => {
+                    return (
+                      <View key={task.id}>
+                        <TouchableOpacity
+                          style={styles.taskPressable}
+                          onPress={() =>
+                            navigation.navigate("SubTasks", {
+                              task: task,
+                              settings: settings,
+                              colorOfSubTask: settings.colorOfNormalTask,
+                              subTasks: subTasks.get(task.id),
+                            })
+                          }
+                        >
+                          <Task
+                            task={task}
+                            settings={settings}
+                            taskColor={settings.colorOfNormalTask}
+                            subTasks={subTasks.get(task.id)}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+              </View>
+            </>
+          ) : undefined}
+        </ScrollView>
+      </View>
+    );
 }
 
 const styles = StyleSheet.create({

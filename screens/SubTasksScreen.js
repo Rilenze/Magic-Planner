@@ -33,9 +33,11 @@ export default function SubTasksScreen({ navigation, route }) {
             <Text style={[styles.title, { color: settings.colorForFont }]}>
               Opis zadatka
             </Text>
-            <Text style={[styles.description, { fontSize: settings.fontSize }]}>
-              {task.description}
-            </Text>
+            <View style={styles.description}>
+              <Text style={{ fontSize: settings.fontSize }}>
+                {task.description}
+              </Text>
+            </View>
             <Text style={[styles.title, { color: settings.colorForFont }]}>
               Podzadaci
             </Text>
@@ -86,6 +88,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   description: {
-    margin: 15,
+    margin: 10,
+    borderWidth: 2,
+    padding: 10,
+    borderRadius: 10,
   },
 });
