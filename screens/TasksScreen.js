@@ -11,6 +11,7 @@ import {
 import Task from "../components/Task";
 import WelcomeMessage from "../components/WelcomeMessage";
 import LoadingAnimation from "../components/LoadingAnimation";
+import CelebrationAnimation from "../components/CelebrationAnimation";
 
 export default function TasksScreen({ navigation, route }) {
   const [kidName, setKidName] = useState(null);
@@ -162,7 +163,7 @@ export default function TasksScreen({ navigation, route }) {
   )
     return <LoadingAnimation />;
   else if (priorityTasks.length == 0 && normalTasks.length == 0)
-    return <WelcomeMessage name={kidName} male={maleKid} />;
+    return <CelebrationAnimation />;
   else
     return (
       <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
