@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Text,
-  Pressable,
   ScrollView,
   RefreshControl,
   TouchableOpacity,
@@ -54,7 +53,7 @@ export default function TasksScreen({ navigation, route }) {
     colorForSubtask: "#FF6347",
     colorForFont: "#141414",
     colorForBackground: "#F5FFFA",
-    colorForProgress: "#009900",
+    colorForProgress: "#00b200",
     phoneLoginString: "1AON081",
   };
 
@@ -163,7 +162,7 @@ export default function TasksScreen({ navigation, route }) {
   )
     return <LoadingAnimation />;
   else if (priorityTasks.length == 0 && normalTasks.length == 0)
-    return <CelebrationAnimation />;
+    return <CelebrationAnimation kidName={kidName} maleKid={maleKid} />;
   else
     return (
       <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
@@ -207,6 +206,7 @@ export default function TasksScreen({ navigation, route }) {
                             settings={settings}
                             taskColor={settings.colorOfPriorityTask}
                             subTasks={subTasks.get(task.id)}
+                            updateTaskScreen={fetchTasks}
                           />
                         </TouchableOpacity>
                       </View>
@@ -249,6 +249,7 @@ export default function TasksScreen({ navigation, route }) {
                             settings={settings}
                             taskColor={settings.colorOfNormalTask}
                             subTasks={subTasks.get(task.id)}
+                            updateTaskScreen={fetchTasks}
                           />
                         </TouchableOpacity>
                       </View>

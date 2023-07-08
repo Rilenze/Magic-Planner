@@ -39,6 +39,7 @@ export default function SubTask({ subTask, subTaskColor, settings }) {
       </View>
       <Checkbox
         style={styles.checkbox}
+        color={isChecked ? settings.colorForProgress : undefined}
         value={isChecked}
         onValueChange={() => {
           setChecked(!isChecked);

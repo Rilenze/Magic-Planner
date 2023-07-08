@@ -19,7 +19,7 @@ export default function App() {
     try {
       const value = await AsyncStorage.getItem("account");
       //console.log("Id in async storage: " + value);
-      if (value !== null) {
+      if (value != null) {
         // value previously stored
         setAccountID(parseInt(value));
       } else setAccountID(0);

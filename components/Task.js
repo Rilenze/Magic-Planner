@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import * as Progress from "react-native-progress";
 
-export default function Task({ task, settings, taskColor, subTasks }) {
+export default function Task({
+  task,
+  settings,
+  taskColor,
+  subTasks,
+  updateTaskScreen,
+}) {
   const [finishedSubTasks, setFinishedSubTasks] = useState(0);
   const [numberOfSubTasks, setNumberOfSubTasks] = useState(0);
 
@@ -30,7 +36,9 @@ export default function Task({ task, settings, taskColor, subTasks }) {
       total++;
     });
     if (counter == total) {
+      updateTaskScreen();
       updateFinishedTask();
+      console.log("updated");
     }
     setFinishedSubTasks(counter);
     setNumberOfSubTasks(total);

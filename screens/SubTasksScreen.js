@@ -88,9 +88,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   description: {
-    margin: 10,
+    marginLeft: 10,
+    marginTop: 10,
+    marginBottom: 30,
     borderWidth: 2,
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 15,
   },
 });
