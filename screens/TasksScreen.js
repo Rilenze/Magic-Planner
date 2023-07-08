@@ -10,13 +10,14 @@ import {
 } from "react-native";
 import Task from "../components/Task";
 import WelcomeMessage from "../components/WelcomeMessage";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 export default function TasksScreen({ navigation, route }) {
   const [kidName, setKidName] = useState(null);
   const [maleKid, setMaleKid] = useState(null);
-  const [priorityTasks, setPriorityTasks] = useState([]);
-  const [normalTasks, setNormalTasks] = useState([]);
-  const [subTasks, setSubTasks] = useState(new Map());
+  const [priorityTasks, setPriorityTasks] = useState(null);
+  const [normalTasks, setNormalTasks] = useState(null);
+  const [subTasks, setSubTasks] = useState(null);
   //const [settings, setSettings] = useState({});
   const { accountID } = route.params;
   const [refreshing, setRefreshing] = useState(false);
@@ -71,7 +72,7 @@ export default function TasksScreen({ navigation, route }) {
   }
 
   function todayTask(taskDate) {
-    if (taskDate != getCurrentDate()) return true;
+    if (taskDate == getCurrentDate()) return true;
     else return false;
   }
 
@@ -151,30 +152,17 @@ export default function TasksScreen({ navigation, route }) {
     }
   }
 
-  // if (priorityTasks.length == 0 && normalTasks.length == 0) {
-  //   return (
-  //     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-  //       <WelcomeMessage name={kidName} male={maleKid} />
-  //       <View style={styles.congratulationBox}>
-  //         <Text
-  //           style={[
-  //             styles.congratulationsText,
-  //             { color: settings.colorForFont },
-  //           ]}
-  //         >
-  //           Čestitamo! Završili ste sve zadatke za danas!
-  //         </Text>
-  //       </View>
-  //     </View>
-  //   );
-  // }
-
-  if (subTasks.size == 0)
-    return (
-      <View>
-        <Text>Loading sub tasks...</Text>
-      </View>
-    );
+  if (
+    subTasks == null ||
+    priorityTasks == null ||
+    normalTasks == null ||
+    kidName == null ||
+    maleKid == null ||
+    settings == null
+  )
+    return <LoadingAnimation />;
+  else if (priorityTasks.length == 0 && normalTasks.length == 0)
+    return <WelcomeMessage name={kidName} male={maleKid} />;
   else
     return (
       <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>

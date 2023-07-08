@@ -8,6 +8,7 @@ import ScanQRCodeScreen from "./screens/ScanQRCodeScreen";
 import TasksScreen from "./screens/TasksScreen";
 import SubTasksScreen from "./screens/SubTasksScreen";
 import { useEffect, useState } from "react";
+import LoadingAnimation from "./components/LoadingAnimation";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,7 @@ export default function App() {
       if (value !== null) {
         // value previously stored
         setAccountID(parseInt(value));
-      }
+      } else setAccountID(0);
     } catch (e) {
       console.log("Error when geting data");
     }
@@ -31,12 +32,14 @@ export default function App() {
     getData();
   }, []);
 
+  if (accountID == null) return <LoadingAnimation />;
+
   return (
     <>
       <StatusBar hidden />
       <NavigationContainer>
         <Stack.Navigator>
-          {accountID === null ? (
+          {accountID === 0 ? (
             <>
               <Stack.Screen
                 name="Home"
