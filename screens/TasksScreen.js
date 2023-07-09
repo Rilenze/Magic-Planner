@@ -49,6 +49,11 @@ export default function TasksScreen({ navigation, route }) {
       setMaleKid(gender);
 
       const setting = await fetchSettings(accountID);
+      setting.colorForBackground = "#F5FFFA";
+      setting.colorOfPriorityTask = "#FF6347";
+      setting.colorOfNormalTask = "#00BFFF";
+      setting.colorForProgress = "#00b200";
+      setting.colorForFont = "#141414";
       setSettings(setting);
 
       const allSubTasks = await fetchSubTasks(data);
@@ -60,7 +65,7 @@ export default function TasksScreen({ navigation, route }) {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    //fetchTasks(accountID, setPriorityTasks, setNormalTasks, setSubTasks);
+    fetchData();
 
     setTimeout(() => {
       setRefreshing(false);
@@ -136,7 +141,7 @@ export default function TasksScreen({ navigation, route }) {
                             settings={settings}
                             taskColor={settings.colorOfPriorityTask}
                             subTasks={subTasks.get(task.id)}
-                            updateTaskScreen={fetchTasks}
+                            updateTaskScreen={fetchData}
                           />
                         </TouchableOpacity>
                       </View>
@@ -180,7 +185,7 @@ export default function TasksScreen({ navigation, route }) {
                             settings={settings}
                             taskColor={settings.colorOfNormalTask}
                             subTasks={subTasks.get(task.id)}
-                            updateTaskScreen={fetchTasks}
+                            updateTaskScreen={fetchData}
                           />
                         </TouchableOpacity>
                       </View>

@@ -11,7 +11,13 @@ export default function SubTask({ subTask, subTaskColor, settings }) {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.subTask, { backgroundColor: subTaskColor }]}>
+      <View
+        style={
+          isChecked
+            ? [styles.subTaskFinished, { backgroundColor: subTaskColor }]
+            : [styles.subTaskActive, { backgroundColor: subTaskColor }]
+        }
+      >
         <Text
           style={{
             fontSize: settings.fontSize,
@@ -22,19 +28,22 @@ export default function SubTask({ subTask, subTaskColor, settings }) {
           {subTask.description}
         </Text>
       </View>
-      <Checkbox
-        style={styles.checkbox}
-        color={isChecked ? settings.colorForProgress : undefined}
-        value={isChecked}
-        onValueChange={() => {
-          if (isChecked) return;
-          setChecked(!isChecked);
-          if (!isChecked) {
-            setTextLine("line-through");
-            updateFinishedSubTasks(subTask.id);
-          } else setTextLine("none");
-        }}
-      />
+      <View style={isChecked ? { opacity: 0.6 } : { opacity: 1 }}>
+        <Checkbox
+          style={styles.checkbox}
+          color={isChecked ? settings.colorForProgress : undefined}
+          value={isChecked}
+          onValueChange={() => {
+            if (isChecked) return;
+            setChecked(!isChecked);
+            if (!isChecked) {
+              setTextLine("line-through");
+              updateFinishedSubTasks(subTask.id);
+            } else setTextLine("none");
+          }}
+          //disabled={isChecked}
+        />
+      </View>
     </View>
   );
 }
@@ -45,7 +54,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
   },
-  subTask: {
+  subTaskFinished: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 15,
+    elevation: 8,
+    borderWidth: 2,
+    opacity: 0.5,
+  },
+  subTaskActive: {
     flex: 1,
     padding: 10,
     borderRadius: 15,

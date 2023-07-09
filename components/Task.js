@@ -20,11 +20,11 @@ export default function Task({
       if (subTask.done) counter++;
       total++;
     });
-    // if (counter == total) {
-    //   updateTaskScreen();
-    //   updateFinishedTask(task.id);
-    //   console.log("updated");
-    // }
+    if (counter == total) {
+      updateTaskScreen();
+      updateFinishedTask(task.id);
+      console.log("updated");
+    }
     setFinishedSubTasks(counter);
     setNumberOfSubTasks(total);
   }
@@ -78,7 +78,7 @@ export default function Task({
             { fontSize: settings.fontSize, color: settings.colorForFont },
           ]}
         >
-          Vrijeme izvršavanja:
+          Rok izvršavanja:
         </Text>
         <Text
           style={{
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
 
   defaultText: {
-    textDecorationLine: "underline",
+    //textDecorationLine: "underline",
     fontWeight: "bold",
   },
   // progress: {
