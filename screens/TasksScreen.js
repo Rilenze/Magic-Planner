@@ -11,6 +11,12 @@ import Task from "../components/Task";
 import WelcomeMessage from "../components/WelcomeMessage";
 import LoadingAnimation from "../components/LoadingAnimation";
 import CelebrationAnimation from "../components/CelebrationAnimation";
+import {
+  fetchTasks,
+  fetchAccount,
+  fetchSettings,
+  fetchSubTasks,
+} from "../modules/fetchingData";
 
 export default function TasksScreen({ navigation, route }) {
   const [kidName, setKidName] = useState(null);
@@ -23,21 +29,39 @@ export default function TasksScreen({ navigation, route }) {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    fetchAccount();
-    fetchTasks();
-    fetchSettings();
+    fetchData();
 
     const unsubscribe = navigation.addListener("focus", () => {
-      // Perform actions or updates when the screen is focused
-      fetchTasks();
+      fetchData();
     });
 
     return unsubscribe;
   }, []);
 
+  async function fetchData() {
+    try {
+      const { data, priority, normal } = await fetchTasks(accountID);
+      setPriorityTasks(priority);
+      setNormalTasks(normal);
+
+      const { name, gender } = await fetchAccount(accountID);
+      setKidName(name);
+      setMaleKid(gender);
+
+      const setting = await fetchSettings(accountID);
+      setSettings(setting);
+
+      const allSubTasks = await fetchSubTasks(data);
+      setSubTasks(allSubTasks);
+    } catch (error) {
+      console.error("Failed to fetch data in TasksScreen:", error);
+    }
+  }
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetchTasks();
+    //fetchTasks(accountID, setPriorityTasks, setNormalTasks, setSubTasks);
+
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);
@@ -56,101 +80,6 @@ export default function TasksScreen({ navigation, route }) {
   //   colorForProgress: "#00b200",
   //   phoneLoginString: "1AON081",
   // };
-
-  const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
-
-  function getCurrentDate() {
-    var d = new Date(),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-
-    return [year, month, day].join("-");
-  }
-
-  function todayTask(taskDate) {
-    if (taskDate == getCurrentDate()) return true;
-    else return false;
-  }
-
-  function compareTimes(a, b) {
-    if (a.dueTime > b.dueTime) return 1;
-    if (a.dueTime < b.dueTime) return -1;
-  }
-
-  async function fetchAccount() {
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/v1/accounts/${accountID}`
-      );
-      const data = await response.json();
-      setKidName(data.kidName);
-      setMaleKid(data.kidMale);
-    } catch (error) {
-      console.error("Failed to fetch account in TasksScreen:", error);
-    }
-  }
-
-  async function fetchTasks() {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/task/${accountID}`);
-      const data = await response.json();
-      fetchSubTasks(data);
-      let priority = [];
-      let normal = [];
-
-      data.forEach((element) => {
-        if (!element.done && !todayTask(element.dueDate)) {
-          if (element.priority) priority.push(element);
-          else if (!element.priority) normal.push(element);
-        }
-      });
-
-      priority.sort(function (a, b) {
-        return compareTimes(a, b);
-      });
-
-      normal.sort(function (a, b) {
-        return compareTimes(a, b);
-      });
-
-      setPriorityTasks(priority);
-      setNormalTasks(normal);
-    } catch (error) {
-      console.error("Failed to fetch tasks in TasksScreen:", error);
-    }
-  }
-
-  async function fetchSubTasks(tasks) {
-    try {
-      let temp = new Map();
-
-      for (let i = 0; i < tasks.length; i++) {
-        const url = `${API_BASE_URL}/api/v1/task/sub/${tasks[i].id}`;
-        const response = await fetch(url);
-        const data = await response.json();
-        temp.set(tasks[i].id, data);
-      }
-      setSubTasks(temp);
-    } catch (error) {
-      console.error("Failed to fetch subTasks in TasksScreen:", error);
-    }
-  }
-
-  async function fetchSettings() {
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/v1/account/settings/${accountID}`
-      );
-      const data = await response.json();
-      setSettings(data);
-    } catch (error) {
-      console.error("Failed to fetch settings in TasksScreen:", error);
-    }
-  }
 
   if (
     subTasks == null ||
@@ -188,6 +117,7 @@ export default function TasksScreen({ navigation, route }) {
                   showsHorizontalScrollIndicator={false}
                 >
                   {priorityTasks.map((task) => {
+                    if (subTasks.get(task.id).length == 0) return null;
                     return (
                       <View key={task.id}>
                         <TouchableOpacity
@@ -231,6 +161,7 @@ export default function TasksScreen({ navigation, route }) {
                   showsHorizontalScrollIndicator={false}
                 >
                   {normalTasks.map((task) => {
+                    if (subTasks.get(task.id).length == 0) return null;
                     return (
                       <View key={task.id}>
                         <TouchableOpacity
@@ -265,13 +196,6 @@ export default function TasksScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  // containerTasks: {
-  //   flex: 1,
-  //   marginTop: 50,
-  // },
-  // tasksWrapper: {
-  //   paddingHorizontal: 25,
-  // },
   tasks: {
     marginBottom: 20,
   },
@@ -282,7 +206,6 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   taskPressable: {
-    //marginTop: 20,
     width: 280,
     marginLeft: 25,
   },

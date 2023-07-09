@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import * as Progress from "react-native-progress";
+import { updateFinishedTask } from "../modules/fetchingData";
 
 export default function Task({
   task,
@@ -12,22 +13,6 @@ export default function Task({
   const [finishedSubTasks, setFinishedSubTasks] = useState(0);
   const [numberOfSubTasks, setNumberOfSubTasks] = useState(0);
 
-  const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
-
-  async function updateFinishedTask() {
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/v1/task/done/${task.id}`,
-        {
-          method: "PUT",
-        }
-      );
-      console.log("Updated task with id: " + task.id);
-    } catch (error) {
-      console.error("Failed to update finished task in Task:", error);
-    }
-  }
-
   function countFinishedSubTasks() {
     let counter = 0;
     let total = 0;
@@ -37,7 +22,7 @@ export default function Task({
     });
     // if (counter == total) {
     //   updateTaskScreen();
-    //   updateFinishedTask();
+    //   updateFinishedTask(task.id);
     //   console.log("updated");
     // }
     setFinishedSubTasks(counter);
