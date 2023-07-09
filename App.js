@@ -33,47 +33,47 @@ export default function App() {
   }, []);
 
   if (accountID == null) return <LoadingAnimation />;
-
-  return (
-    <>
-      <StatusBar hidden />
-      <NavigationContainer>
-        <Stack.Navigator>
-          {accountID === 0 ? (
-            <>
-              <Stack.Screen
-                name="Home"
-                component={HomeScreen}
-                options={{ title: "Welcome", headerShown: false }}
-              />
-              <Stack.Screen
-                name="ScanQRCode"
-                component={ScanQRCodeScreen}
-                options={{ title: "Scan", headerShown: false }}
-              />
-            </>
-          ) : (
-            <>
-              <Stack.Screen
-                name="Tasks"
-                component={TasksScreen}
-                initialParams={{ accountID: accountID }}
-                options={{
-                  title: "Tasks",
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="SubTasks"
-                component={SubTasksScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-            </>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </>
-  );
+  else
+    return (
+      <>
+        <StatusBar hidden />
+        <NavigationContainer>
+          <Stack.Navigator>
+            {accountID == 0 ? (
+              <>
+                <Stack.Screen
+                  name="Home"
+                  component={HomeScreen}
+                  options={{ title: "Welcome", headerShown: false }}
+                />
+                <Stack.Screen
+                  name="ScanQRCode"
+                  component={ScanQRCodeScreen}
+                  options={{ title: "Scan", headerShown: false }}
+                />
+              </>
+            ) : (
+              <>
+                <Stack.Screen
+                  name="Tasks"
+                  component={TasksScreen}
+                  initialParams={{ accountID: accountID }}
+                  options={{
+                    title: "Tasks",
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name="SubTasks"
+                  component={SubTasksScreen}
+                  options={{
+                    headerShown: false,
+                  }}
+                />
+              </>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </>
+    );
 }

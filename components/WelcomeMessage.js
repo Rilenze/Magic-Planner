@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export default function WelcomeMessage({ name, male }) {
+export default function WelcomeMessage({ name, male, settings }) {
   if (!male)
     return (
       <View style={styles.welcomeBox}>
-        <Text style={styles.text}>Dobro došla {name}!</Text>
+        <Text style={{ fontSize: settings.fontSize + 6, fontWeight: "bold" }}>
+          Dobro došla {name}!
+        </Text>
       </View>
     );
   const letters = "aeioukh";
@@ -14,16 +16,14 @@ export default function WelcomeMessage({ name, male }) {
 
   return (
     <View style={styles.welcomeBox}>
-      <Text style={styles.text}>Dobro došao {name}!</Text>
+      <Text style={{ fontSize: settings.fontSize + 6, fontWeight: "bold" }}>
+        Dobro došao {name}!
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 30,
-    fontWeight: "bold",
-  },
   welcomeBox: {
     alignItems: "center",
     marginTop: 20,

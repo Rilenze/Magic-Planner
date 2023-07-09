@@ -18,14 +18,14 @@ export default function TasksScreen({ navigation, route }) {
   const [priorityTasks, setPriorityTasks] = useState(null);
   const [normalTasks, setNormalTasks] = useState(null);
   const [subTasks, setSubTasks] = useState(null);
-  //const [settings, setSettings] = useState({});
+  const [settings, setSettings] = useState({});
   const { accountID } = route.params;
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchAccount();
     fetchTasks();
-    //fetchSettings();
+    fetchSettings();
 
     const unsubscribe = navigation.addListener("focus", () => {
       // Perform actions or updates when the screen is focused
@@ -43,19 +43,19 @@ export default function TasksScreen({ navigation, route }) {
     }, 1000);
   }, []);
 
-  const settings = {
-    id: 37,
-    accountId: 37,
-    font: "Palatino Linotype",
-    fontSize: 22,
-    colorOfPriorityTask: "#FF6347",
-    colorOfNormalTask: "#00BFFF",
-    colorForSubtask: "#FF6347",
-    colorForFont: "#141414",
-    colorForBackground: "#F5FFFA",
-    colorForProgress: "#00b200",
-    phoneLoginString: "1AON081",
-  };
+  // const settings = {
+  //   id: 37,
+  //   accountId: 37,
+  //   font: "Palatino Linotype",
+  //   fontSize: 22,
+  //   colorOfPriorityTask: "#FF6347",
+  //   colorOfNormalTask: "#00BFFF",
+  //   colorForSubtask: "#FF6347",
+  //   colorForFont: "#141414",
+  //   colorForBackground: "#F5FFFA",
+  //   colorForProgress: "#00b200",
+  //   phoneLoginString: "1AON081",
+  // };
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
@@ -103,7 +103,7 @@ export default function TasksScreen({ navigation, route }) {
       let normal = [];
 
       data.forEach((element) => {
-        if (!element.done && todayTask(element.dueDate)) {
+        if (!element.done && !todayTask(element.dueDate)) {
           if (element.priority) priority.push(element);
           else if (!element.priority) normal.push(element);
         }
@@ -172,11 +172,11 @@ export default function TasksScreen({ navigation, route }) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <WelcomeMessage name={kidName} male={maleKid} />
+          <WelcomeMessage name={kidName} male={maleKid} settings={settings} />
 
           {priorityTasks.length != 0 ? (
             <>
-              <Text style={[styles.title, { color: settings.colorForFont }]}>
+              <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
                 Prioritetni zadaci
               </Text>
               <View style={styles.tasks}>
@@ -219,7 +219,7 @@ export default function TasksScreen({ navigation, route }) {
 
           {normalTasks.length != 0 ? (
             <>
-              <Text style={[styles.title, { color: settings.colorForFont }]}>
+              <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
                 Manje prioritetni zadaci
               </Text>
               <View style={styles.tasks}>

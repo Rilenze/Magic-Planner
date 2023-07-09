@@ -57,7 +57,7 @@ export default function ScanQRCodeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F5FFFA",
+    backgroundColor: "#fff",
     flex: 1,
     alignItems: "center",
     //justifyContent: "center",

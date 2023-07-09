@@ -18,7 +18,7 @@ export default function CelebrationAnimation({ kidName, maleKid }) {
         loop
       />
       <Text style={styles.congratulation}>
-        Bravo {name}! Nemate više zadataka za danas!
+        Bravo {name}! Nemaš više zadataka za danas!
       </Text>
     </View>
   );

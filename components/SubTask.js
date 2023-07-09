@@ -42,6 +42,7 @@ export default function SubTask({ subTask, subTaskColor, settings }) {
         color={isChecked ? settings.colorForProgress : undefined}
         value={isChecked}
         onValueChange={() => {
+          if (isChecked) return;
           setChecked(!isChecked);
           if (!isChecked) {
             setTextLine("line-through");

@@ -35,11 +35,11 @@ export default function Task({
       if (subTask.done) counter++;
       total++;
     });
-    if (counter == total) {
-      updateTaskScreen();
-      updateFinishedTask();
-      console.log("updated");
-    }
+    // if (counter == total) {
+    //   updateTaskScreen();
+    //   updateFinishedTask();
+    //   console.log("updated");
+    // }
     setFinishedSubTasks(counter);
     setNumberOfSubTasks(total);
   }
@@ -110,7 +110,7 @@ export default function Task({
           <Progress.Bar
             width={null}
             height={15}
-            borderColor={settings.colorForFont}
+            borderColor={"black"}
             borderWidth={2}
           />
         ) : (
@@ -119,17 +119,12 @@ export default function Task({
             width={null}
             height={15}
             color={settings.colorForProgress}
-            borderColor={settings.colorForFont}
+            borderColor={"black"}
             borderWidth={2}
           />
         )}
       </View>
-      <Text
-        style={[
-          styles.progressText,
-          { color: settings.colorForFont, fontSize: settings.fontSize },
-        ]}
-      >
+      <Text style={[styles.progressText, { fontSize: settings.fontSize }]}>
         {finishedSubTasks} / {numberOfSubTasks}
       </Text>
     </>
@@ -154,7 +149,7 @@ const styles = StyleSheet.create({
   //   elevation: 15,
   // },
   progressText: {
-    fontWeight: "bold",
+    //fontWeight: "bold",
     marginTop: 10,
   },
 });
