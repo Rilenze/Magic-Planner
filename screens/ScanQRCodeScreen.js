@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { CommonActions } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function ScanQRCodeScreen() {
+export default function ScanQRCodeScreen({ navigation, route }) {
   const [scanned, setScanned] = useState(false);
   const [stringCodes, setStringCodes] = useState([]);
 
@@ -34,12 +35,32 @@ export default function ScanQRCodeScreen() {
     setScanned(true);
     console.log("Type: " + type + "\nData: " + data);
 
+    let isAuthenticated = false;
+    let id = 0;
+
     stringCodes.forEach((string) => {
       if (string.phoneLoginString == data) {
         console.log("Nadjen qr code i njegov id: " + string.accountId);
+        id = string.accountId;
         storeData(string.accountId.toString());
+        isAuthenticated = true;
       }
     });
+
+    if (isAuthenticated) {
+      const resetAction = CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: "Tasks",
+            params: { accountID: id },
+          },
+        ],
+      });
+
+      navigation.dispatch(resetAction);
+    }
+    if (!isAuthenticated) console.log("Nema tog accounta");
   };
 
   return (

@@ -18,13 +18,12 @@ export default function App() {
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem("account");
-      //console.log("Id in async storage: " + value);
       if (value != null) {
-        // value previously stored
-        setAccountID(parseInt(value));
+        const id = parseInt(value);
+        setAccountID(id);
       } else setAccountID(0);
     } catch (e) {
-      console.log("Error when geting data");
+      console.log("Error when geting data: " + e);
     }
   };
 
@@ -52,26 +51,23 @@ export default function App() {
                   options={{ title: "Scan", headerShown: false }}
                 />
               </>
-            ) : (
-              <>
-                <Stack.Screen
-                  name="Tasks"
-                  component={TasksScreen}
-                  initialParams={{ accountID: accountID }}
-                  options={{
-                    title: "Tasks",
-                    headerShown: false,
-                  }}
-                />
-                <Stack.Screen
-                  name="SubTasks"
-                  component={SubTasksScreen}
-                  options={{
-                    headerShown: false,
-                  }}
-                />
-              </>
-            )}
+            ) : undefined}
+            <Stack.Screen
+              name="Tasks"
+              component={TasksScreen}
+              initialParams={{ accountID: accountID }}
+              options={{
+                title: "Tasks",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="SubTasks"
+              component={SubTasksScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </>
