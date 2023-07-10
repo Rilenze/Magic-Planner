@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import LottieView from "lottie-react-native";
+import CurrentDate from "./CurrentDate";
 
 export default function CelebrationAnimation({ kidName, maleKid }) {
   let name = kidName;
@@ -12,10 +13,12 @@ export default function CelebrationAnimation({ kidName, maleKid }) {
   }
   return (
     <View style={[StyleSheet.absoluteFill, styles.container]}>
+      <CurrentDate />
       <LottieView
         source={require("../assets/animations/celebration.json")}
         autoPlay
         loop
+        style={{ width: 500, height: 500 }}
       />
       <Text style={styles.congratulation}>
         Bravo {name}! Nemaš više zadataka za danas!
@@ -31,8 +34,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   congratulation: {
+    position: "absolute",
     fontSize: 24,
     fontWeight: "bold",
     marginHorizontal: 20,
+    alignItems: "center",
   },
 });

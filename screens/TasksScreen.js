@@ -17,6 +17,8 @@ import {
   fetchSettings,
   fetchSubTasks,
 } from "../modules/fetchingData";
+import CurrentDate from "../components/CurrentDate";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function TasksScreen({ navigation, route }) {
   const [kidName, setKidName] = useState(null);
@@ -49,11 +51,7 @@ export default function TasksScreen({ navigation, route }) {
       setMaleKid(gender);
 
       const setting = await fetchSettings(accountID);
-      setting.colorForBackground = "#F5FFFA";
-      setting.colorOfPriorityTask = "#FF6347";
-      setting.colorOfNormalTask = "#00BFFF";
       setting.colorForProgress = "#00b200";
-      setting.colorForFont = "#141414";
       setSettings(setting);
 
       const allSubTasks = await fetchSubTasks(data);
@@ -100,6 +98,13 @@ export default function TasksScreen({ navigation, route }) {
   else
     return (
       <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
+        <CurrentDate />
+        <TouchableOpacity
+          style={styles.menuButton}
+          onPress={() => navigation.navigate("Tasks")}
+        >
+          <Ionicons name="menu" size={50}></Ionicons>
+        </TouchableOpacity>
         <ScrollView
           showsVerticalScrollIndicator={false}
           refreshControl={
@@ -223,5 +228,9 @@ const styles = StyleSheet.create({
   congratulationsText: {
     fontSize: 30,
     fontWeight: "bold",
+  },
+  menuButton: {
+    marginTop: 10,
+    marginLeft: 15,
   },
 });

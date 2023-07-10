@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import SubTask from "../components/SubTask";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import CurrentDate from "../components/CurrentDate";
 
 export default function SubTasksScreen({ navigation, route }) {
   const { task } = route.params;
@@ -17,6 +18,7 @@ export default function SubTasksScreen({ navigation, route }) {
 
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
+      <CurrentDate />
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.navigate("Tasks")}
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     marginTop: 10,
-    marginLeft: 10,
+    marginLeft: 15,
   },
   description: {
     marginLeft: 30,
