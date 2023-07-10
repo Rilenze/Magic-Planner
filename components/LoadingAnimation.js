@@ -9,6 +9,7 @@ export default function LoadingAnimation() {
         source={require("../assets/animations/loading.json")}
         autoPlay
         loop
+        style={{ width: 200, height: 200 }}
       />
     </View>
   );

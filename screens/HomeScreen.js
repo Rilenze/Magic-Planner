@@ -46,7 +46,7 @@ export default function HomeScreen({ navigation }) {
         <Image source={require("../assets/MagicPlanner.png")}></Image>
       </View>
       <TouchableOpacity style={styles.scanButton} onPress={handleScanButton}>
-        <Text style={styles.text}>Scan QR code to login</Text>
+        <Text style={styles.text}>Skeniraj QR kod za prijavu</Text>
       </TouchableOpacity>
     </View>
   );

@@ -1,13 +1,27 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { CommonActions } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LottieView from "lottie-react-native";
 
-export default function ScanQRCodeScreen({ navigation, route }) {
+export default function ScanQRCodeScreen({ navigation }) {
   const [scanned, setScanned] = useState(false);
   const [stringCodes, setStringCodes] = useState([]);
+  const [isAuthenticated, setAuhenticated] = useState(false);
+  const [id, setId] = useState(0);
+  const [nonExistentAccount, setNonExistentAccount] = useState(false);
+
+  useEffect(() => {
+    fetchStringCodes();
+  }, []);
 
   const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
 
@@ -27,53 +41,85 @@ export default function ScanQRCodeScreen({ navigation, route }) {
     }
   };
 
-  useEffect(() => {
-    fetchStringCodes();
-  }, []);
-
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     console.log("Type: " + type + "\nData: " + data);
 
-    let isAuthenticated = false;
-    let id = 0;
+    let findAccount = false;
 
     stringCodes.forEach((string) => {
       if (string.phoneLoginString == data) {
         console.log("Nadjen qr code i njegov id: " + string.accountId);
-        id = string.accountId;
         storeData(string.accountId.toString());
-        isAuthenticated = true;
+        setAuhenticated(true);
+        setId(string.accountId);
+        findAccount = true;
       }
     });
 
-    if (isAuthenticated) {
-      const resetAction = CommonActions.reset({
-        index: 0,
-        routes: [
-          {
-            name: "Tasks",
-            params: { accountID: id },
-          },
-        ],
-      });
-
-      navigation.dispatch(resetAction);
-    }
-    if (!isAuthenticated) console.log("Nema tog accounta");
+    if (!findAccount) setNonExistentAccount(true);
   };
 
-  return (
-    <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={{
-          width: Dimensions.get("window").width * 0.9,
-          height: Dimensions.get("window").height * 0.9,
-        }}
-      />
-    </View>
-  );
+  const navigationReset = () => {
+    const resetAction = CommonActions.reset({
+      index: 0,
+      routes: [
+        {
+          name: "Tasks",
+          params: { accountID: id },
+        },
+      ],
+    });
+
+    navigation.dispatch(resetAction);
+  };
+
+  if (isAuthenticated)
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <LottieView
+          source={require("../assets/animations/successfullyLogin.json")}
+          autoPlay
+          loop={false}
+          onAnimationFinish={navigationReset}
+          style={{ width: 300, height: 300 }}
+        />
+        <Text style={{ fontSize: 26 }}>Uspješna prijava!</Text>
+      </View>
+    );
+  else if (!isAuthenticated && !nonExistentAccount)
+    return (
+      <View style={styles.container}>
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={{
+            width: Dimensions.get("window").width * 0.9,
+            height: Dimensions.get("window").height * 0.9,
+          }}
+        />
+      </View>
+    );
+  else if (!isAuthenticated && nonExistentAccount)
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <LottieView
+          source={require("../assets/animations/failedLogin.json")}
+          autoPlay
+          loop={false}
+          style={{ width: 300, height: 300 }}
+        />
+        <Text style={{ fontSize: 26 }}>Prijava nije uspjela!</Text>
+        <Text style={{ fontSize: 22 }}>Profil ne postoji</Text>
+        <TouchableOpacity
+          style={styles.failedButton}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Text style={{ color: "white", fontSize: 22, fontWeight: "bold" }}>
+            Ok
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -81,6 +127,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flex: 1,
     alignItems: "center",
-    //justifyContent: "center",
+  },
+  failedButton: {
+    backgroundColor: "#E25B5B",
+    padding: 10,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 80,
+    elevation: 5,
+    width: 230,
   },
 });

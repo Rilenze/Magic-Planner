@@ -23,20 +23,18 @@ export default function SubTasksScreen({ navigation, route }) {
       >
         <Ionicons name="arrow-back" size={50}></Ionicons>
       </TouchableOpacity>
+      <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
+        Opis zadatka
+      </Text>
+      <View style={styles.description}>
+        <Text style={{ fontSize: settings.fontSize }}>{task.description}</Text>
+      </View>
+      <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
+        Podzadaci
+      </Text>
       <ScrollView>
         <View style={styles.containerTasks}>
           <View style={styles.tasksWrapper}>
-            <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
-              Opis zadatka
-            </Text>
-            <View style={styles.description}>
-              <Text style={{ fontSize: settings.fontSize }}>
-                {task.description}
-              </Text>
-            </View>
-            <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
-              Podzadaci
-            </Text>
             <View style={styles.tasks}>
               {subTasks.map((subTask) => {
                 return (
@@ -68,14 +66,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tasksWrapper: {
-    paddingTop: 20,
+    //paddingTop: 20,
     paddingHorizontal: 20,
   },
   tasks: {
-    marginTop: 20,
+    //marginTop: 20,
   },
   title: {
-    marginLeft: 10,
+    marginTop: 20,
+    marginLeft: 30,
+    marginBottom: 20,
     fontWeight: "bold",
   },
   backButton: {
@@ -83,9 +83,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   description: {
-    marginLeft: 10,
-    marginTop: 10,
-    marginBottom: 30,
+    marginLeft: 30,
+    marginRight: 80,
+    marginBottom: 10,
     borderWidth: 2,
     padding: 10,
     borderRadius: 15,
