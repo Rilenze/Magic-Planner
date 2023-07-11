@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   View,
@@ -10,8 +10,27 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { CommonActions } from "@react-navigation/native";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
+  const { accountID } = route.params;
+
+  useEffect(() => {
+    if (accountID != 0) {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: "Tasks",
+              params: { accountID: accountID },
+            },
+          ],
+        })
+      );
+    }
+  }, []);
+
   const askForCameraPermission = () => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();

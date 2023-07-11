@@ -6,11 +6,13 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import Task from "../components/Task";
 import WelcomeMessage from "../components/WelcomeMessage";
 import LoadingAnimation from "../components/LoadingAnimation";
 import CelebrationAnimation from "../components/CelebrationAnimation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   fetchTasks,
   fetchAccount,
@@ -18,7 +20,8 @@ import {
   fetchSubTasks,
 } from "../modules/fetchingData";
 import CurrentDate from "../components/CurrentDate";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import { CommonActions } from "@react-navigation/native";
 
 export default function TasksScreen({ navigation, route }) {
   const [kidName, setKidName] = useState(null);
@@ -51,7 +54,6 @@ export default function TasksScreen({ navigation, route }) {
       setMaleKid(gender);
 
       const setting = await fetchSettings(accountID);
-      setting.colorForProgress = "#00b200";
       setSettings(setting);
 
       const allSubTasks = await fetchSubTasks(data);
@@ -84,6 +86,44 @@ export default function TasksScreen({ navigation, route }) {
   //   phoneLoginString: "1AON081",
   // };
 
+  const alertFunction = () => {
+    Alert.alert(
+      "Da li ste sigurni da se želite odjaviti?",
+      "Ako se odjavite moraćete ponovo skenirati QR kod kako biste se prijavili",
+      [
+        {
+          text: "Da",
+          onPress: logout,
+        },
+        {
+          text: "Ne",
+          onPress: undefined,
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem("account");
+      console.log("Successful logout");
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: "Home",
+              params: { accountID: 0 },
+            },
+          ],
+        })
+      );
+    } catch (e) {
+      console.log("Error when storing data: " + e);
+    }
+  };
+
   if (
     subTasks == null ||
     priorityTasks == null ||
@@ -94,16 +134,21 @@ export default function TasksScreen({ navigation, route }) {
   )
     return <LoadingAnimation />;
   else if (priorityTasks.length == 0 && normalTasks.length == 0)
-    return <CelebrationAnimation kidName={kidName} maleKid={maleKid} />;
+    return (
+      <>
+        <CurrentDate />
+        <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
+          <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
+        </TouchableOpacity>
+        <CelebrationAnimation kidName={kidName} maleKid={maleKid} />
+      </>
+    );
   else
     return (
       <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
         <CurrentDate />
-        <TouchableOpacity
-          style={styles.menuButton}
-          onPress={() => navigation.navigate("Tasks")}
-        >
-          <Ionicons name="menu" size={50}></Ionicons>
+        <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
+          <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
         </TouchableOpacity>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -229,8 +274,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
   },
-  menuButton: {
-    marginTop: 10,
+  logoutButton: {
+    marginTop: 15,
     marginLeft: 15,
   },
 });

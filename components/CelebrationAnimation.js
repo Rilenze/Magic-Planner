@@ -12,8 +12,7 @@ export default function CelebrationAnimation({ kidName, maleKid }) {
     if (!letters.includes(lastLetter)) name += "e";
   }
   return (
-    <View style={[StyleSheet.absoluteFill, styles.container]}>
-      <CurrentDate />
+    <View style={styles.container}>
       <LottieView
         source={require("../assets/animations/celebration.json")}
         autoPlay
@@ -32,6 +31,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 60,
   },
   congratulation: {
     position: "absolute",
