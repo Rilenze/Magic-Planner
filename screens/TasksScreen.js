@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   RefreshControl,
   TouchableOpacity,
   Alert,
+  TouchableWithoutFeedback,
 } from "react-native";
 import Task from "../components/Task";
 import WelcomeMessage from "../components/WelcomeMessage";
@@ -32,6 +33,7 @@ export default function TasksScreen({ navigation, route }) {
   const [settings, setSettings] = useState({});
   const { accountID } = route.params;
   const [refreshing, setRefreshing] = useState(false);
+  const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
     fetchData();
@@ -124,6 +126,14 @@ export default function TasksScreen({ navigation, route }) {
     }
   };
 
+  const handleOnPress = (task) => {
+    navigation.navigate("SubTasks", {
+      task: task,
+      settings: settings,
+      subTasks: subTasks.get(task.id),
+    });
+  };
+
   if (
     subTasks == null ||
     priorityTasks == null ||
@@ -180,15 +190,9 @@ export default function TasksScreen({ navigation, route }) {
                     return (
                       <View key={task.id}>
                         <TouchableOpacity
+                          activeOpacity={0.6}
                           style={styles.taskPressable}
-                          onPress={() =>
-                            navigation.navigate("SubTasks", {
-                              task: task,
-                              settings: settings,
-                              colorOfSubTask: settings.colorOfPriorityTask,
-                              subTasks: subTasks.get(task.id),
-                            })
-                          }
+                          onPress={() => handleOnPress(task)}
                         >
                           <Task
                             task={task}
@@ -224,15 +228,11 @@ export default function TasksScreen({ navigation, route }) {
                     return (
                       <View key={task.id}>
                         <TouchableOpacity
+                          activeOpacity={0.6}
                           style={styles.taskPressable}
-                          onPress={() =>
-                            navigation.navigate("SubTasks", {
-                              task: task,
-                              settings: settings,
-                              colorOfSubTask: settings.colorOfNormalTask,
-                              subTasks: subTasks.get(task.id),
-                            })
-                          }
+                          onPress={() => {
+                            handleOnPress(task);
+                          }}
                         >
                           <Task
                             task={task}

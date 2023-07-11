@@ -13,7 +13,6 @@ import CurrentDate from "../components/CurrentDate";
 export default function SubTasksScreen({ navigation, route }) {
   const { task } = route.params;
   const { settings } = route.params;
-  const { colorOfSubTask } = route.params;
   const { subTasks } = route.params;
 
   return (
@@ -43,7 +42,11 @@ export default function SubTasksScreen({ navigation, route }) {
                   <View key={subTask.id}>
                     <SubTask
                       subTask={subTask}
-                      subTaskColor={colorOfSubTask}
+                      subTaskColor={
+                        task.priority
+                          ? settings.colorOfPriorityTask
+                          : settings.colorOfNormalTask
+                      }
                       settings={settings}
                     />
                   </View>
