@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Text,
   View,
@@ -18,7 +18,7 @@ export default function SubTasksScreen({ navigation, route }) {
 
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-      <CurrentDate />
+      <CurrentDate settings={settings} />
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.navigate("Tasks")}

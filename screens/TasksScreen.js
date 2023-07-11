@@ -136,17 +136,21 @@ export default function TasksScreen({ navigation, route }) {
   else if (priorityTasks.length == 0 && normalTasks.length == 0)
     return (
       <>
-        <CurrentDate />
+        <CurrentDate settings={settings} />
         <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
           <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
         </TouchableOpacity>
-        <CelebrationAnimation kidName={kidName} maleKid={maleKid} />
+        <CelebrationAnimation
+          kidName={kidName}
+          maleKid={maleKid}
+          settings={settings}
+        />
       </>
     );
   else
     return (
       <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-        <CurrentDate />
+        <CurrentDate settings={settings} />
         <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
           <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
         </TouchableOpacity>

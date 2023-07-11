@@ -7,7 +7,7 @@
     "icon": "./assets/MagicPlanner.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/planner.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

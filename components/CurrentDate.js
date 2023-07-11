@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-export default function CurrentDate() {
+export default function CurrentDate({ settings }) {
   const date = new Date();
   const daniUSedmici = [
     "Nedjelja",
@@ -20,7 +20,7 @@ export default function CurrentDate() {
         right: 20,
       }}
     >
-      <Text style={{ fontSize: 22 }}>
+      <Text style={{ fontSize: settings.fontSize }}>
         {daniUSedmici[date.getDay()]}, {date.getDate()}.{date.getMonth() + 1}.
         {date.getFullYear()}
       </Text>
