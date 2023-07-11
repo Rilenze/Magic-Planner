@@ -24,7 +24,7 @@ export async function fetchTasks(accountID) {
     let normal = [];
 
     data.forEach((element) => {
-      if (!element.done && !todayTask(element.dueDate)) {
+      if (!element.done && todayTask(element.dueDate)) {
         if (element.priority) priority.push(element);
         else if (!element.priority) normal.push(element);
       }
