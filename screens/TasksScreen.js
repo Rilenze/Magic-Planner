@@ -160,18 +160,19 @@ export default function TasksScreen({ navigation, route }) {
   else
     return (
       <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-        <CurrentDate settings={settings} />
-        <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
-          <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
-        </TouchableOpacity>
+        <View style={styles.header}>
+          <CurrentDate settings={settings} />
+          <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
+            <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
+          </TouchableOpacity>
+        </View>
+        <WelcomeMessage name={kidName} male={maleKid} settings={settings} />
         <ScrollView
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <WelcomeMessage name={kidName} male={maleKid} settings={settings} />
-
           {priorityTasks.length != 0 ? (
             <>
               <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>

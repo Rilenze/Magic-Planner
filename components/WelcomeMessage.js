@@ -25,7 +25,7 @@ export default function WelcomeMessage({ name, male, settings }) {
 
 const styles = StyleSheet.create({
   welcomeBox: {
-    flex: 1,
+    //flex: 1,
     //alignItems: "center",
     marginLeft: 25,
     marginTop: 20,

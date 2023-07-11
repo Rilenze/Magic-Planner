@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -14,6 +14,20 @@ export default function SubTasksScreen({ navigation, route }) {
   const { task } = route.params;
   const { settings } = route.params;
   const { subTasks } = route.params;
+  const [sortedSubTasks, setSortedSubTasks] = useState([]);
+
+  useEffect(() => {
+    sortSubTasks();
+  }, []);
+
+  const sortSubTasks = () => {
+    const temp = [...subTasks];
+    temp.sort(function (a, b) {
+      if (a.done && !b.done) return 1;
+      if (!a.done && b.done) return -1;
+    });
+    setSortedSubTasks(temp);
+  };
 
   return (
     <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
@@ -33,49 +47,32 @@ export default function SubTasksScreen({ navigation, route }) {
       <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
         Podzadaci
       </Text>
-      <ScrollView>
-        <View style={styles.containerTasks}>
-          <View style={styles.tasksWrapper}>
-            <View style={styles.tasks}>
-              {subTasks.map((subTask) => {
-                return (
-                  <View key={subTask.id}>
-                    <SubTask
-                      subTask={subTask}
-                      subTaskColor={
-                        task.priority
-                          ? settings.colorOfPriorityTask
-                          : settings.colorOfNormalTask
-                      }
-                      settings={settings}
-                    />
-                  </View>
-                );
-              })}
+      <ScrollView style={styles.scroller}>
+        {sortedSubTasks.map((subTask) => {
+          return (
+            <View key={subTask.id}>
+              <SubTask
+                subTask={subTask}
+                subTaskColor={
+                  task.priority
+                    ? settings.colorOfPriorityTask
+                    : settings.colorOfNormalTask
+                }
+                settings={settings}
+              />
             </View>
-          </View>
-        </View>
+          );
+        })}
       </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  containerTasks: {
-    flex: 1,
-  },
-  tasksWrapper: {
-    //paddingTop: 20,
-    paddingHorizontal: 20,
-  },
-  tasks: {
-    //marginTop: 20,
+  scroller: {
+    marginHorizontal: 20,
+    //borderWidth: 1.5,
+    borderRadius: 15,
   },
   title: {
     marginTop: 20,

@@ -89,7 +89,9 @@ export default function Task({
           {task.dueTime}
         </Text>
       </View>
-
+      {/* <Text style={[styles.progressPercent, { fontSize: settings.fontSize }]}>
+        {Math.round((finishedSubTasks * 100) / numberOfSubTasks)} %
+      </Text> */}
       <View style={styles.progress}>
         {finishedSubTasks === 0 ? (
           <Progress.Bar
@@ -109,8 +111,9 @@ export default function Task({
           />
         )}
       </View>
+
       <Text style={[styles.progressText, { fontSize: settings.fontSize }]}>
-        {finishedSubTasks} / {numberOfSubTasks}
+        {finishedSubTasks} od {numberOfSubTasks} završenih podzataka
       </Text>
     </>
   );
@@ -124,17 +127,15 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     elevation: 8,
   },
-
   defaultText: {
-    //textDecorationLine: "underline",
     fontWeight: "bold",
   },
-  // progress: {
-  //   borderWidth: 0.5,
-  //   elevation: 15,
-  // },
   progressText: {
-    //fontWeight: "bold",
     marginTop: 10,
+    opacity: 0.8,
+  },
+  progressPercent: {
+    marginBottom: 10,
+    opacity: 0.8,
   },
 });
