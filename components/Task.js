@@ -39,7 +39,10 @@ export default function Task({
         <Text
           style={[
             styles.defaultText,
-            { fontSize: settings.fontSize, color: settings.colorForFont },
+            {
+              fontSize: settings.fontSize,
+              color: settings.colorForFont,
+            },
           ]}
         >
           Naziv zadatka:
@@ -49,6 +52,7 @@ export default function Task({
             fontSize: settings.fontSize,
             color: settings.colorForFont,
             marginBottom: 20,
+            fontWeight: "bold",
           }}
         >
           {task.taskName}
@@ -72,22 +76,25 @@ export default function Task({
         >
           {task.description}
         </Text> */}
-        <Text
-          style={[
-            styles.defaultText,
-            { fontSize: settings.fontSize, color: settings.colorForFont },
-          ]}
-        >
-          Rok izvršavanja:
-        </Text>
-        <Text
-          style={{
-            fontSize: settings.fontSize,
-            color: settings.colorForFont,
-          }}
-        >
-          {task.dueTime}
-        </Text>
+        <View style={styles.time}>
+          <Text
+            style={[
+              styles.defaultText,
+              { fontSize: settings.fontSize, color: settings.colorForFont },
+            ]}
+          >
+            Rok izvršavanja:
+          </Text>
+          <Text
+            style={{
+              fontSize: settings.fontSize,
+              color: settings.colorForFont,
+              fontWeight: "bold",
+            }}
+          >
+            {task.dueTime}
+          </Text>
+        </View>
       </View>
       {/* <Text style={[styles.progressPercent, { fontSize: settings.fontSize }]}>
         {Math.round((finishedSubTasks * 100) / numberOfSubTasks)} %
@@ -122,20 +129,19 @@ export default function Task({
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 20,
     marginBottom: 20,
     borderWidth: 2,
     elevation: 8,
   },
   defaultText: {
-    fontWeight: "bold",
+    //fontWeight: "bold",
   },
   progressText: {
     marginTop: 10,
     opacity: 0.8,
   },
-  progressPercent: {
-    marginBottom: 10,
-    opacity: 0.8,
+  time: {
+    //flexDirection: "row",
   },
 });

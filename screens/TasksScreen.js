@@ -91,16 +91,16 @@ export default function TasksScreen({ navigation, route }) {
   const alertFunction = () => {
     Alert.alert(
       "Da li ste sigurni da se želite odjaviti?",
-      "Ako se odjavite moraćete ponovo skenirati QR kod kako biste se prijavili",
+      "Ako se odjavite ponovo ćete morati skenirati QR kod kako biste se prijavili.",
       [
-        {
-          text: "Da",
-          onPress: logout,
-        },
         {
           text: "Ne",
           onPress: undefined,
           style: "cancel",
+        },
+        {
+          text: "Da",
+          onPress: logout,
         },
       ]
     );
