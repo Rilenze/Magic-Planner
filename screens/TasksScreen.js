@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   TouchableWithoutFeedback,
+  SafeAreaView,
 } from "react-native";
 import Task from "../components/Task";
 import WelcomeMessage from "../components/WelcomeMessage";
@@ -145,21 +146,27 @@ export default function TasksScreen({ navigation, route }) {
     return <LoadingAnimation />;
   else if (priorityTasks.length == 0 && normalTasks.length == 0)
     return (
-      <>
-        <CurrentDate settings={settings} />
-        <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
-          <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
-        </TouchableOpacity>
+      <SafeAreaView
+        style={{ backgroundColor: settings.colorForBackground, flex: 1 }}
+      >
+        <View>
+          <CurrentDate settings={settings} />
+          <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
+            <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
+          </TouchableOpacity>
+        </View>
         <CelebrationAnimation
           kidName={kidName}
           maleKid={maleKid}
           settings={settings}
         />
-      </>
+      </SafeAreaView>
     );
   else
     return (
-      <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
+      <SafeAreaView
+        style={{ backgroundColor: settings.colorForBackground, flex: 1 }}
+      >
         <View style={styles.header}>
           <CurrentDate settings={settings} />
           <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
@@ -251,7 +258,7 @@ export default function TasksScreen({ navigation, route }) {
             </>
           ) : undefined}
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
 }
 

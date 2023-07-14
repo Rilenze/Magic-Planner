@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import SubTask from "../components/SubTask";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -30,14 +31,18 @@ export default function SubTasksScreen({ navigation, route }) {
   };
 
   return (
-    <View style={{ backgroundColor: settings.colorForBackground, flex: 1 }}>
-      <CurrentDate settings={settings} />
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.navigate("Tasks")}
-      >
-        <Ionicons name="arrow-back" size={50}></Ionicons>
-      </TouchableOpacity>
+    <SafeAreaView
+      style={{ backgroundColor: settings.colorForBackground, flex: 1 }}
+    >
+      <View>
+        <CurrentDate settings={settings} />
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.navigate("Tasks")}
+        >
+          <Ionicons name="arrow-back" size={50}></Ionicons>
+        </TouchableOpacity>
+      </View>
       <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
         Opis zadatka
       </Text>
@@ -64,7 +69,7 @@ export default function SubTasksScreen({ navigation, route }) {
           );
         })}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

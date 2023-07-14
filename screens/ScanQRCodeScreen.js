@@ -6,6 +6,7 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { CommonActions } from "@react-navigation/native";
@@ -89,7 +90,7 @@ export default function ScanQRCodeScreen({ navigation }) {
     );
   else if (!isAuthenticated && !nonExistentAccount)
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{
@@ -97,7 +98,7 @@ export default function ScanQRCodeScreen({ navigation }) {
             height: Dimensions.get("window").height * 0.9,
           }}
         />
-      </View>
+      </SafeAreaView>
     );
   else if (!isAuthenticated && nonExistentAccount)
     return (
