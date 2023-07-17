@@ -79,7 +79,6 @@ export async function updateFinishedSubTasks(id) {
     const response = await fetch(`${API_BASE_URL}/api/v1/task/sub/done/${id}`, {
       method: "PUT",
     });
-    console.log("Updated sub task with id: " + id);
   } catch (error) {
     console.error("Failed to update finished task in subTaks:", error);
   }
@@ -90,7 +89,6 @@ export async function updateFinishedTask(id) {
     const response = await fetch(`${API_BASE_URL}/api/v1/task/done/${id}`, {
       method: "PUT",
     });
-    console.log("Updated task with id: " + id);
   } catch (error) {
     console.error("Failed to update finished task in Task:", error);
   }

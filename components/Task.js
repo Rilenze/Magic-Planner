@@ -23,7 +23,6 @@ export default function Task({
     if (counter == total) {
       updateTaskScreen();
       updateFinishedTask(task.id);
-      console.log("updated");
     }
     setFinishedSubTasks(counter);
     setNumberOfSubTasks(total);

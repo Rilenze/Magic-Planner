@@ -34,23 +34,18 @@ export default function ScanQRCodeScreen({ navigation }) {
 
   const storeData = async (value) => {
     try {
-      console.log(value);
       await AsyncStorage.setItem("account", value);
-      console.log("Account id stored");
     } catch (e) {
-      console.log("Error when storing data");
+      console.log("Error when storing data: " + e);
     }
   };
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    console.log("Type: " + type + "\nData: " + data);
-
     let findAccount = false;
 
     stringCodes.forEach((string) => {
       if (string.phoneLoginString == data) {
-        console.log("Nadjen qr code i njegov id: " + string.accountId);
         storeData(string.accountId.toString());
         setAuhenticated(true);
         setId(string.accountId);
@@ -94,8 +89,8 @@ export default function ScanQRCodeScreen({ navigation }) {
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{
-            width: Dimensions.get("window").width * 0.9,
-            height: Dimensions.get("window").height * 0.9,
+            width: Dimensions.get("screen").width * 0.9,
+            height: Dimensions.get("screen").height * 0.9,
           }}
         />
       </SafeAreaView>
@@ -125,8 +120,8 @@ export default function ScanQRCodeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
     flex: 1,
+    backgroundColor: "#fff",
     alignItems: "center",
   },
   failedButton: {

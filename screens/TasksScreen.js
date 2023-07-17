@@ -7,7 +7,6 @@ import {
   RefreshControl,
   TouchableOpacity,
   Alert,
-  TouchableWithoutFeedback,
   SafeAreaView,
 } from "react-native";
 import Task from "../components/Task";
@@ -34,7 +33,6 @@ export default function TasksScreen({ navigation, route }) {
   const [settings, setSettings] = useState({});
   const { accountID } = route.params;
   const [refreshing, setRefreshing] = useState(false);
-  const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
     fetchData();
@@ -110,7 +108,6 @@ export default function TasksScreen({ navigation, route }) {
   const logout = async () => {
     try {
       await AsyncStorage.removeItem("account");
-      console.log("Successful logout");
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
