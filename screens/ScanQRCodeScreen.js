@@ -12,6 +12,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { CommonActions } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LottieView from "lottie-react-native";
+import { fetchStringCodes } from "../modules/fetchingData";
 
 export default function ScanQRCodeScreen({ navigation }) {
   const [scanned, setScanned] = useState(false);
@@ -21,14 +22,11 @@ export default function ScanQRCodeScreen({ navigation }) {
   const [nonExistentAccount, setNonExistentAccount] = useState(false);
 
   useEffect(() => {
-    fetchStringCodes();
+    fetchCodes();
   }, []);
 
-  const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
-
-  async function fetchStringCodes() {
-    const response = await fetch(`${API_BASE_URL}/api/v1/account/settings`);
-    const data = await response.json();
+  async function fetchCodes() {
+    const data = await fetchStringCodes();
     setStringCodes(data);
   }
 

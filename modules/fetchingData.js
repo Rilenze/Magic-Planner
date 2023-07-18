@@ -76,7 +76,7 @@ export async function fetchSettings(accountID) {
 
 export async function updateFinishedSubTasks(id) {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/v1/task/sub/done/${id}`, {
+    await fetch(`${API_BASE_URL}/api/v1/task/sub/done/${id}`, {
       method: "PUT",
     });
   } catch (error) {
@@ -86,10 +86,16 @@ export async function updateFinishedSubTasks(id) {
 
 export async function updateFinishedTask(id) {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/v1/task/done/${id}`, {
+    await fetch(`${API_BASE_URL}/api/v1/task/done/${id}`, {
       method: "PUT",
     });
   } catch (error) {
     console.error("Failed to update finished task in Task:", error);
   }
+}
+
+export async function fetchStringCodes() {
+  const response = await fetch(`${API_BASE_URL}/api/v1/account/settings`);
+  const data = await response.json();
+  return data;
 }
