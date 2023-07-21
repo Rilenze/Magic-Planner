@@ -39,8 +39,9 @@ export default function Task({
           style={[
             styles.defaultText,
             {
-              fontSize: settings.fontSize,
+              fontSize: settings.fontSize + 1,
               color: settings.colorForFont,
+              fontFamily: settings.font,
             },
           ]}
         >
@@ -51,7 +52,8 @@ export default function Task({
             fontSize: settings.fontSize,
             color: settings.colorForFont,
             marginBottom: 20,
-            fontWeight: "bold",
+            fontFamily: settings.font,
+            textDecorationLine: "underline",
           }}
         >
           {task.taskName}
@@ -79,7 +81,11 @@ export default function Task({
           <Text
             style={[
               styles.defaultText,
-              { fontSize: settings.fontSize, color: settings.colorForFont },
+              {
+                fontSize: settings.fontSize + 1,
+                color: settings.colorForFont,
+                fontFamily: settings.font,
+              },
             ]}
           >
             Rok izvršavanja:
@@ -88,7 +94,8 @@ export default function Task({
             style={{
               fontSize: settings.fontSize,
               color: settings.colorForFont,
-              fontWeight: "bold",
+              fontFamily: settings.font,
+              textDecorationLine: "underline",
             }}
           >
             {task.dueTime}
@@ -118,7 +125,12 @@ export default function Task({
         )}
       </View>
 
-      <Text style={[styles.progressText, { fontSize: settings.fontSize }]}>
+      <Text
+        style={[
+          styles.progressText,
+          { fontSize: settings.fontSize - 1, fontFamily: settings.font },
+        ]}
+      >
         {finishedSubTasks} od {numberOfSubTasks} završenih podzataka
       </Text>
     </>
@@ -133,14 +145,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     elevation: 8,
   },
-  defaultText: {
-    //fontWeight: "bold",
-  },
   progressText: {
     marginTop: 10,
     opacity: 0.8,
-  },
-  time: {
-    //flexDirection: "row",
   },
 });

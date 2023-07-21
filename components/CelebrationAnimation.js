@@ -19,7 +19,10 @@ export default function CelebrationAnimation({ kidName, maleKid, settings }) {
         style={{ width: 500, height: 500 }}
       />
       <Text
-        style={[styles.congratulation, { fontSize: settings.fontSize + 2 }]}
+        style={[
+          styles.congratulation,
+          { fontSize: settings.fontSize + 2, fontFamily: settings.font },
+        ]}
       >
         Bravo {name}! Nemaš više zadataka za danas!
       </Text>
@@ -36,7 +39,6 @@ const styles = StyleSheet.create({
   },
   congratulation: {
     position: "absolute",
-    fontWeight: "bold",
     marginHorizontal: 20,
     alignItems: "center",
   },

@@ -20,7 +20,7 @@ export default function CurrentDate({ settings }) {
         right: 20,
       }}
     >
-      <Text style={{ fontSize: settings.fontSize }}>
+      <Text style={{ fontSize: settings.fontSize, fontFamily: settings.font }}>
         {daniUSedmici[date.getDay()]}, {date.getDate()}.{date.getMonth() + 1}.
         {date.getFullYear()}.
       </Text>

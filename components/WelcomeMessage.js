@@ -16,7 +16,12 @@ export default function WelcomeMessage({ name, male, settings }) {
 
   return (
     <View style={styles.welcomeBox}>
-      <Text style={{ fontSize: settings.fontSize + 6, fontWeight: "bold" }}>
+      <Text
+        style={{
+          fontSize: settings.fontSize + 6,
+          fontFamily: settings.font,
+        }}
+      >
         Dobro došao {name}!
       </Text>
     </View>

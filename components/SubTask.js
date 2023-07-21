@@ -22,6 +22,7 @@ export default function SubTask({ subTask, subTaskColor, settings }) {
           style={{
             fontSize: settings.fontSize,
             color: settings.colorForFont,
+            fontFamily: settings.font,
             textDecorationLine: textLine,
           }}
         >

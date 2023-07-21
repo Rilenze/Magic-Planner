@@ -179,7 +179,15 @@ export default function TasksScreen({ navigation, route }) {
         >
           {priorityTasks.length != 0 ? (
             <>
-              <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
+              <Text
+                style={[
+                  styles.title,
+                  {
+                    fontSize: settings.fontSize + 2,
+                    fontFamily: settings.font,
+                  },
+                ]}
+              >
                 Prioritetni zadaci
               </Text>
               <View style={styles.tasks}>
@@ -217,7 +225,15 @@ export default function TasksScreen({ navigation, route }) {
 
           {normalTasks.length != 0 ? (
             <>
-              <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
+              <Text
+                style={[
+                  styles.title,
+                  {
+                    fontSize: settings.fontSize + 2,
+                    fontFamily: settings.font,
+                  },
+                ]}
+              >
                 Manje prioritetni zadaci
               </Text>
               <View style={styles.tasks}>
@@ -265,7 +281,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
     marginLeft: 25,
     marginBottom: 25,
   },

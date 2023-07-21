@@ -43,13 +43,27 @@ export default function SubTasksScreen({ navigation, route }) {
           <Ionicons name="arrow-back" size={50}></Ionicons>
         </TouchableOpacity>
       </View>
-      <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
+      <Text
+        style={[
+          styles.title,
+          { fontSize: settings.fontSize + 2, fontFamily: settings.font },
+        ]}
+      >
         Opis zadatka
       </Text>
       <View style={styles.description}>
-        <Text style={{ fontSize: settings.fontSize }}>{task.description}</Text>
+        <Text
+          style={{ fontSize: settings.fontSize, fontFamily: settings.font }}
+        >
+          {task.description}
+        </Text>
       </View>
-      <Text style={[styles.title, { fontSize: settings.fontSize + 2 }]}>
+      <Text
+        style={[
+          styles.title,
+          { fontSize: settings.fontSize + 2, fontFamily: settings.font },
+        ]}
+      >
         Podzadaci
       </Text>
       <ScrollView style={styles.scroller}>
@@ -83,7 +97,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 30,
     marginBottom: 20,
-    fontWeight: "bold",
   },
   backButton: {
     marginTop: 10,
@@ -91,7 +104,7 @@ const styles = StyleSheet.create({
   },
   description: {
     marginLeft: 30,
-    marginRight: 80,
+    marginRight: 35,
     marginBottom: 10,
     borderWidth: 2,
     padding: 10,
