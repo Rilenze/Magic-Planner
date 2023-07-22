@@ -35,11 +35,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 60,
+    marginTop: 60,
   },
   congratulation: {
     position: "absolute",
     marginHorizontal: 20,
-    alignItems: "center",
   },
 });

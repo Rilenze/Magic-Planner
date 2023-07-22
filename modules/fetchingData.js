@@ -52,9 +52,8 @@ export async function fetchSubTasks(tasks) {
       const url = `${API_BASE_URL}/api/v1/task/sub/${tasks[i].id}`;
       const response = await fetch(url);
       const data = await response.json();
-      temp.set(tasks[i].id, data);
+      if (data.length != 0) temp.set(tasks[i].id, data);
     }
-
     return temp;
   } catch (error) {
     console.error("Failed to fetch subTasks in TasksScreen:", error);

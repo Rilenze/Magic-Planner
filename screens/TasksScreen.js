@@ -141,22 +141,34 @@ export default function TasksScreen({ navigation, route }) {
     settings == null
   )
     return <LoadingAnimation />;
-  else if (priorityTasks.length == 0 && normalTasks.length == 0)
+  else if (
+    (priorityTasks.length == 0 && normalTasks.length == 0) ||
+    subTasks.size == 0
+  )
     return (
       <SafeAreaView
         style={{ backgroundColor: settings.colorForBackground, flex: 1 }}
       >
-        <View>
-          <CurrentDate settings={settings} />
-          <TouchableOpacity style={styles.logoutButton} onPress={alertFunction}>
-            <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
-          </TouchableOpacity>
-        </View>
-        <CelebrationAnimation
-          kidName={kidName}
-          maleKid={maleKid}
-          settings={settings}
-        />
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View>
+            <CurrentDate settings={settings} />
+            <TouchableOpacity
+              style={styles.logoutButton}
+              onPress={alertFunction}
+            >
+              <SimpleLineIcons name="logout" size={40}></SimpleLineIcons>
+            </TouchableOpacity>
+          </View>
+          <CelebrationAnimation
+            kidName={kidName}
+            maleKid={maleKid}
+            settings={settings}
+          />
+        </ScrollView>
       </SafeAreaView>
     );
   else
@@ -199,7 +211,7 @@ export default function TasksScreen({ navigation, route }) {
                   showsHorizontalScrollIndicator={false}
                 >
                   {priorityTasks.map((task) => {
-                    if (subTasks.get(task.id).length == 0) return null;
+                    if (!subTasks.get(task.id)) return null;
                     return (
                       <View key={task.id}>
                         <TouchableOpacity
@@ -245,7 +257,7 @@ export default function TasksScreen({ navigation, route }) {
                   showsHorizontalScrollIndicator={false}
                 >
                   {normalTasks.map((task) => {
-                    if (subTasks.get(task.id).length == 0) return null;
+                    if (!subTasks.get(task.id)) return null;
                     return (
                       <View key={task.id}>
                         <TouchableOpacity
