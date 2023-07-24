@@ -2,8 +2,8 @@
   <img src="/assets/images/MagicPlanner.png" alt="Magic Planner" />
 </div>
 
-Magic Planner is a mobile application built with React Native Expo that aims to assist children with Down Syndrome 
-in managing their daily tasks and routines effectively. This app is designed to work in conjunction with the Magic Planner 
+Magic Planner is a mobile application built with React Native Expo that aims to assist children with Down Syndrome
+in managing their daily tasks and routines effectively. This app is designed to work in conjunction with the Magic Planner
 web application, which allows parents to set tasks and subtasks for their children.
 
 ## Features
@@ -15,6 +15,15 @@ web application, which allows parents to set tasks and subtasks for their childr
 - Track task progress with a progress bar that reflects the completion of subtasks.
 - Access the list of subtasks for each task and mark them as completed when it is finished.
 - Receive congratulatory messages when all tasks for the day are completed.
+
+## App Preview
+
+<div>
+  <img src="/assets/images/ScanMockup.png" alt="Screen 1" width="400" />
+  <img src="/assets/images/TasksMockup.png" alt="Screen 1" width="400" />
+  <img src="/assets/images/SubTasksMockup.png" alt="Screen 1" width="400" />
+  <img src="/assets/images/CongratulationMockup.png" alt="Screen 1" width="400" />
+</div>
 
 ## Installation
 
