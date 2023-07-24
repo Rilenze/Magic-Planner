@@ -19,10 +19,10 @@ web application, which allows parents to set tasks and subtasks for their childr
 ## App Preview
 
 <div>
-  <img src="/assets/images/ScanMockup.png" alt="Screen 1" width="400" />
-  <img src="/assets/images/TasksMockup.png" alt="Screen 1" width="400" />
-  <img src="/assets/images/SubTasksMockup.png" alt="Screen 1" width="400" />
-  <img src="/assets/images/CongratulationMockup.png" alt="Screen 1" width="400" />
+  <img src="/assets/images/ScanMockup.png" alt="Screen 1"  width="400"/>
+  <img src="/assets/images/TasksMockup.png" alt="Screen 1"  width="400"/>
+  <img src="/assets/images/SubTasksMockup.png" alt="Screen 1"  width="600"/>
+  <img src="/assets/images/CongratulationMockup.png" alt="Screen 1"  width="300"/>
 </div>
 
 ## Installation
