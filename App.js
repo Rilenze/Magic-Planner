@@ -43,6 +43,7 @@ export default function App() {
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem("account");
+      console.log("Id u async storage: " + value);
       if (value != null) {
         const id = parseInt(value);
         setAccountID(id);
@@ -61,7 +62,7 @@ export default function App() {
   else
     return (
       <>
-        <StatusBar hidden />
+        {/* <StatusBar hidden /> */}
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen

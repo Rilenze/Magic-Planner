@@ -45,6 +45,13 @@ export default function ScanQRCodeScreen({ navigation }) {
     stringCodes.forEach((string) => {
       if (string.phoneLoginString == data) {
         storeData(string.accountId.toString());
+        console.log(
+          "ID koji se ubacuje u async storage: " +
+            string.accountId +
+            " i skeniran kod: " +
+            data
+        );
+
         setAuhenticated(true);
         setId(string.accountId);
         findAccount = true;

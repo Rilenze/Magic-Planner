@@ -131,7 +131,7 @@ export default function Task({
           { fontSize: settings.fontSize - 1, fontFamily: settings.font },
         ]}
       >
-        {finishedSubTasks} od {numberOfSubTasks} završenih podzataka
+        {finishedSubTasks} od {numberOfSubTasks} završenih podzadataka
       </Text>
     </>
   );
