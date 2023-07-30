@@ -62,7 +62,7 @@ export default function App() {
   else
     return (
       <>
-        {/* <StatusBar hidden /> */}
+        <StatusBar hidden />
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
