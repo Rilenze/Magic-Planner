@@ -1,6 +1,10 @@
+
 <div align="center">
-  <img src="/assets/images/MagicPlanner.png" alt="Magic Planner" />
+    <img src="/assets/images/MagicPlanner.png" alt="Magic Planner" />
 </div>
+
+![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android-informational?style=flat&logo=android&logoColor=white&color=blue)
+![Version](https://img.shields.io/badge/Version-1.0.0-green)
 
 Magic Planner is a mobile application built with React Native Expo that aims to assist children with Down Syndrome
 in managing their daily tasks and routines effectively. This app is designed to work in conjunction with the Magic Planner
