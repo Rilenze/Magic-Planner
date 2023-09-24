@@ -5,7 +5,9 @@ export default function WelcomeMessage({ name, male, settings }) {
   if (!male)
     return (
       <View style={styles.welcomeBox}>
-        <Text style={{ fontSize: settings.fontSize + 6 }}>
+        <Text
+          style={{ fontSize: settings.fontSize + 6, fontFamily: settings.font }}
+        >
           Dobro došla {name}!
         </Text>
       </View>

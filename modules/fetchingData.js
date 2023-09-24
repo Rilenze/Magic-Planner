@@ -1,6 +1,7 @@
 import { todayTask, compareTimes } from "../modules/dateModules";
 
-const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
+//const API_BASE_URL = "https://zavrsni-back.herokuapp.com";
+const API_BASE_URL = "https://zavrsni-be-ba8430d30a0c.herokuapp.com";
 
 export async function fetchAccount(accountID) {
   try {
